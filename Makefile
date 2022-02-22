@@ -7,6 +7,7 @@ RM := rm -r
 BUILD_DIR := ./build
 SRC_DIR := ./src
 PROJECT_BINARY_DIR := ./bin
+DOCS_DIR := ./docs
 
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
@@ -24,8 +25,13 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 	mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
+# Docs
+.PHONY: $(DOCS_DIR)
+$(DOCS_DIR):
+	$(RM) $(DOCS_DIR)
+	doxygen Doxyfile
+
 # Clean
 .PHONY: clean
 clean:
-	echo $(SRCS)
 	$(RM) $(BUILD_DIR)
