@@ -3,8 +3,12 @@
 
 #include "square.h"
 
-class Property : Square {
+namespace monopolish
+{
+	class Property : Square
+	{
 
-};
+	};
+}
 
 #endif

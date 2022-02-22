@@ -1,8 +1,12 @@
 #ifndef MNPLY_SQUARE
 #define MNPLY_SQUARE
 
-class Square {
+namespace monopolish
+{
+	class Square
+	{
 
-};
+	};
+}
 
 #endif

@@ -10,7 +10,7 @@ int Random()
 }
 
 
-int main()
+int main_random()
 {
 	// A random number generator actually produces a pseudo-random sequence of numbers.
 	// This means that the random number generator will always produce the same sequence of numbers.
