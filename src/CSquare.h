@@ -1,3 +1,9 @@
+// Jacob Sánchez Pérez
+
+/** @file
+ * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
+ */
+
 #ifndef MP_SQUARE_H
 #define MP_SQUARE_H
 
@@ -5,6 +11,9 @@
 
 namespace mp
 {
+	/**
+	 * @brief Represents a square in the board.
+	 */
 	class CSquare
 	{
 	public:

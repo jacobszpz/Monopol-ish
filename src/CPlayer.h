@@ -1,3 +1,9 @@
+// Jacob Sánchez Pérez
+
+/** @file
+ * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
+ */
+
 #ifndef MP_PLAYER_H
 #define MP_PLAYER_H
 
@@ -5,6 +11,9 @@
 
 namespace mp
 {
+	/**
+	 * @brief Represents a player of the game.
+	 */
 	class CPlayer
 	{
 		enum class EPiece
