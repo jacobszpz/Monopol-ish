@@ -1,9 +1,9 @@
 #ifndef MP_PROPERTY_H
 #define MP_PROPERTY_H
 
-#include "square.h"
+#include "CSquare.h"
 
-namespace monopolish
+namespace mp
 {
 	class CProperty : CSquare
 	{

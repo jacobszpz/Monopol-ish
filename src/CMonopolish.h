@@ -2,10 +2,10 @@
 #define MP_MONOPOLISH_H
 
 #include <vector>
-#include "square.h"
-#include "player.h"
+#include "CSquare.h"
+#include "CPlayer.h"
 
-namespace monopolish
+namespace mp
 {
 	class CMonopolish
 	{
