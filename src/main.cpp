@@ -1,8 +1,10 @@
+/// @author Jacob Sánchez Pérez
+
 #include <iostream>
-#include "square.h"
+#include "CSquare.h"
 
 using namespace std;
-using namespace monopolish;
+using namespace mp;
 
 int main()
 {

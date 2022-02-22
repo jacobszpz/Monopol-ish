@@ -4,11 +4,11 @@
  * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
  */
 
-
 #ifndef MP_MONOPOLISH_H
 #define MP_MONOPOLISH_H
 
 #include <vector>
+#include <memory>
 #include "CSquare.h"
 #include "CPlayer.h"
 
@@ -32,7 +32,7 @@ namespace mp
 	protected:
 		/// Number of rounds to play.
 	  const unsigned int mRounds = 20;
-    std::vector<CPlayer> mPlayers;
+    std::vector<std::unique_ptr<CPlayer>> mPlayers;
 	};
 }
 

@@ -1,3 +1,9 @@
+// Jacob Sánchez Pérez
+
+/** @file
+ * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
+ */
+
 #include "CMonopolish.h"
 #include "CSquareFactory.h"
 

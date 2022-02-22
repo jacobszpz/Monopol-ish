@@ -17,6 +17,17 @@ namespace mp
 	class CProperty : CSquare
 	{
 	public:
+		enum class EColour
+		{
+			Red,
+			Grey,
+			Brown,
+			Orange,
+			Yellow,
+			Green,
+			Blue,
+			Purple
+		};
 		CProperty();
 	protected:
 		float mCost;
