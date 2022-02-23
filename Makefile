@@ -8,9 +8,11 @@ BUILD_DIR := ./build
 SRC_DIR := ./src
 PROJECT_BINARY_DIR := ./bin
 DOCS_DIR := ./docs
+DOXYGEN_DIRS := ./html ./latex
 
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DOXYGEN_OBJS := $(DOXYGEN_DIRS:%=$(DOCS_DIR)/%)
 
 .PHONY: all
 all: clean $(PROJECT_BINARY_DIR)/$(TARGET_EXEC)
@@ -28,7 +30,7 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 # Docs
 .PHONY: $(DOCS_DIR)
 $(DOCS_DIR):
-	$(RM) $(DOCS_DIR)
+	$(RM) $(DOXYGEN_OBJS)
 	doxygen Doxyfile
 
 # Clean

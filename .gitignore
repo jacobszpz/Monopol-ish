@@ -54,4 +54,8 @@
 # End of https://www.toptal.com/developers/gitignore/api/linux,c++
 
 # Doxygen
-docs
+docs/html
+docs/latex
+
+# Atom
+.editor-settings

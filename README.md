@@ -1,4 +1,4 @@
-# Monopol-ish
+# MONOPOL*ish*
 
 ![GPLv2][license-badge]
 
@@ -9,6 +9,10 @@
 > taking turns over a set number of rounds. Play is to be automated according to a sequence of pseudo-
 > random numbers - there is no artificial intelligence, and no user input. All output will be text based
 > and directed towards the console – there are no graphical elements to this assignment.
+
+
+
+![](./docs/board.png)
 
 
 
