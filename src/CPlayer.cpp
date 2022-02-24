@@ -1,3 +1,3 @@
 // Jacob Sánchez Pérez
 
-#include "player.h"
+#include "CPlayer.h"

@@ -16,7 +16,7 @@ namespace jsan
 	/**
 	 * @brief Helper class for handling contents of text files.
 	 */
-	class CFiles
+	class CTextFiles
 	{
 	public:
 		/**
@@ -27,7 +27,7 @@ namespace jsan
 		 *   Leave empty to disable comments.
 		 */
 		static std::vector<std::string> GetLinesFromFile(std::string filename,
-			bool ignoreEmptyLines, std::string commentPrefix = "//");
+			bool ignoreEmptyLines = false, std::string commentPrefix = "//");
 		/**
 		 * @brief Split a string
 		 */

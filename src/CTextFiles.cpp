@@ -6,8 +6,8 @@
  */
 
 #include <string>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 #include "CTextFiles.h"
 
@@ -16,7 +16,7 @@ using namespace jsan;
 
 
 // Retrieves contents from file in disk as a string
-vector<string> CFiles::GetLinesFromFile(string filename, bool ignoreEmptyLines, string commentPrefix)
+vector<string> CTextFiles::GetLinesFromFile(string filename, bool ignoreEmptyLines, string commentPrefix)
 {
 	string line;
 	ifstream inputFile(filename);
@@ -27,19 +27,30 @@ vector<string> CFiles::GetLinesFromFile(string filename, bool ignoreEmptyLines, 
 	{
 		while (getline(inputFile, line))
 		{
-			if ((line[0] != '/' || line[1] != '/') && line != "") { lines.push_back(line); }
-        }
-		}
-		else
-		{
-			cout << "File IO error when opening " << filename << endl;
-		}
+			bool isComment = false;
+
+			if (line.length() >= commentPrefix.length())
+			{
+				string prefix = line.substr(0, commentPrefix.length());
+				isComment = (prefix.compare(commentPrefix) == 0);
+			}
+
+			if (!isComment && (!ignoreEmptyLines || line.empty()))
+			{
+				lines.push_back(line);
+			}
+    }
+	}
+	else
+	{
+		throw ios_base::failure("Could not open text file");
+	}
 
 		return lines;
 }
 
 // Split string into contiguous chunks
-vector<string> CFiles::Split(string line, char sep) {
+vector<string> CTextFiles::Split(string line, char sep) {
 	vector<string> pieces;
 	string buffer = "";
 	line.append(" ");

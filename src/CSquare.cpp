@@ -4,14 +4,14 @@
  * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
  */
 
-#include "CSquareFactory.h"
+#include <string>
+#include "CSquare.h"
 
 using namespace std;
 using namespace mp;
 
 
-CSquare CSquareFactory::parseString(string propertyLine)
+CSquare::CSquare(string propertyLine)
 {
 
-	return CSquare("");
 }
