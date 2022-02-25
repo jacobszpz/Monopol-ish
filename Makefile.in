@@ -37,7 +37,7 @@ src_objs := $(cpp_srcs:%=$(build_dir)/%.o)
 test_objs := $(test_srcs:%=$(build_dir)/%.o)
 
 # build
-TEST_LIBS = @LIBPTHREAD@ @LIBGTEST@
+TEST_LIBS = @LIBGTEST@ @LIBPTHREAD@
 LIBS = @LIBS@
 DEFS = @DEFS@
 CPPFLAGS = @CPPFLAGS@
