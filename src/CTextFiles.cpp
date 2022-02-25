@@ -53,7 +53,14 @@ vector<string> CTextFiles::GetLinesFromFile(string filename, bool ignoreEmptyLin
 vector<string> CTextFiles::Split(string line, char sep) {
 	vector<string> pieces;
 	string buffer = "";
-	line.append(" ");
+	string suffix = " ";
+
+	if (sep)
+	{
+		suffix = sep;
+	}
+
+	line.append(suffix);
 
 	for (char c : line)
 	{
