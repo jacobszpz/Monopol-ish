@@ -16,6 +16,24 @@
 
 
 
+## Building From Source
+
+```bash
+# Get dependencies
+sudo apt-get install -y autoconf libgtest-dev
+# Generate configure script
+chmod +x ./autogen.sh
+./autogen.sh
+# Generate Makefile
+./configure
+# Run tests
+make test
+# Create a binary in ./bin/
+make
+```
+
+
+
 ## Authorship
 
 **Jacob Sanchez Perez \<jsanchez-perez@uclan.ac.uk>**

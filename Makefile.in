@@ -1,0 +1,125 @@
+# @configure_input@
+# Copyright (C) 2022  Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
+
+SHELL = /bin/sh
+
+.SUFFIXES:
+.SUFFIXES: .cpp .o
+
+# commands
+RM := rm -rf
+
+# binaries
+TARGET_EXEC := monopolish
+TEST_TARGET_EXEC := $(TARGET_EXEC)_test
+
+# directories
+srcdir := @srcdir@
+code_dir := $(srcdir)/src
+dist_dir := $(srcdir)/dist
+build_dir := $(srcdir)/build
+test_dir := $(srcdir)/test
+docs_dir := $(srcdir)/docs
+binary_dir := $(srcdir)/bin
+
+# source
+entrypoint_filename := main.cpp
+entrypoint := $(code_dir)/$(entrypoint_filename)
+
+cpp_srcs := $(wildcard $(code_dir)/*.cpp)
+cpp_srcs := $(filter-out $(entrypoint),$(cpp_srcs))
+header_srcs := $(wildcard $(code_dir)/*.h)
+test_srcs := $(wildcard $(test_dir)/*.cpp)
+
+# object files
+entrypoint_obj := $(entrypoint:%=$(build_dir)/%.o)
+src_objs := $(cpp_srcs:%=$(build_dir)/%.o)
+test_objs := $(test_srcs:%=$(build_dir)/%.o)
+
+# build
+TEST_LIBS = @LIBPTHREAD@ @LIBGTEST@
+LIBS = @LIBS@
+DEFS = @DEFS@
+CPPFLAGS = @CPPFLAGS@
+CPPFLAGS += -I $(code_dir)
+LDFLAGS = @LDFLAGS@
+CXXFLAGS = @CXXFLAGS@
+
+# docs
+doxygen_dirs := html latex
+doxygen_dirs := $(addprefix $(docs_dir)/,$(doxygen_dirs))
+
+# dist
+autogen := autogen.sh
+build_req_files := configure configure.ac Makefile.in
+build_req_files := $(addprefix $(srcdir)/,$(build_req_files))
+tar_dirname := @PACKAGE_TARNAME@-@PACKAGE_VERSION@
+tar_dirpath := $(dist_dir)/$(tar_dirname)
+tar_filename := $(tar_dirname).tar.gz
+distfiles := $(code_dir) $(test_dir) $(docs_dir) $(build_req_files)
+
+# prefixes
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+################################################################
+
+# target: all
+.PHONY: all
+all: clean docs $(binary_dir)/$(TARGET_EXEC)
+
+
+# target: executable
+$(binary_dir)/$(TARGET_EXEC): $(src_objs) $(entrypoint_obj)
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+
+# target: C++ object files
+$(build_dir)/%.cpp.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+
+# target: install
+.PHONY: install
+install:
+	echo "Currently, this software is not possible to install."
+
+
+# target: check
+.PHONY: check
+check: clean $(binary_dir)/$(TEST_TARGET_EXEC)
+	$(binary_dir)/$(TEST_TARGET_EXEC)
+
+$(binary_dir)/$(TEST_TARGET_EXEC): $(test_objs) $(src_objs)
+	mkdir -p $(binary_dir)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ \
+		$(LDFLAGS) $(TEST_LIBS)
+
+
+# target: docs
+.PHONY: $(docs_dir)
+$(docs_dir): $(cpp_srcs) $(header_srcs)
+	$(RM) $(doxygen_dirs)
+	doxygen Doxyfile
+
+
+# target: dist
+.PHONY: $(dist_dir)
+$(dist_dir): $(docs_dir)
+	chmod +x $(srcdir)/$(autogen)
+	$(srcdir)/$(autogen)
+	mkdir -p $(tar_dirpath)
+	cp -r $(distfiles) $(tar_dirpath)
+	tar --gzip -chf $@/$(tar_filename) $(tar_dirpath)/
+	rm -r $(tar_dirpath)
+
+
+# target: clean
+.PHONY: clean
+clean:
+	$(RM) $(build_dir)
+	$(RM) $(binary_dir)
+	$(RM) $(dist_dir)
+	$(RM) $(doxygen_dirs)
