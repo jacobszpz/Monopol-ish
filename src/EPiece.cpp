@@ -1,0 +1,26 @@
+// Jacob Sánchez Pérez
+
+/** @file
+ * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
+ */
+
+#include "EPiece.h"
+
+using namespace std;
+using namespace mp;
+
+ostream& mp::operator << (ostream& outputStream, const EPiece piece)
+{
+		switch(piece)
+		{
+				case EPiece::hamster:
+					outputStream << "hamster";
+					break;
+				case EPiece::pumpkin:
+					outputStream << "pumpkin";
+					break;
+				default:
+					outputStream.setstate(ios_base::failbit);
+		}
+		return outputStream;
+}
