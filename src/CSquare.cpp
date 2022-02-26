@@ -15,3 +15,7 @@ CSquare::CSquare(string name)
 {
 
 }
+
+void CSquare::PlayerLands(CPlayer& player, ostream& outputStream)
+{
+}

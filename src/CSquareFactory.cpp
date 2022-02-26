@@ -9,7 +9,12 @@
  // #define NDEBUG
 #include <cassert>
 #include "CSquareFactory.h"
+#include "CProperty.h"
+#include "CJailSquare.h"
+#include "CGoToJailSquare.h"
+#include "CFreeParkingSquare.h"
 #include "CTextFiles.h"
+#include "ESquareType.h"
 
 using namespace std;
 using namespace mp;
@@ -22,39 +27,70 @@ BoardSquares CSquareFactory::ReadFromFile(std::string filename)
 
 	for (auto line : fileLines)
 	{
-		squares.push_back(make_unique<CSquare>(ParseString(line)));
+		squares.push_back(ParseString(line));
 	}
 
 	return squares;
 }
 
-CSquare CSquareFactory::ParseString(string squareDefinition)
+unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 {
-	string squareDescription = squareDefinition.substr(SQUARE_NAME_START);
-	string firstElement = squareDefinition.substr(0, SQUARE_NAME_START - 1);
+	auto squareElements = CTextFiles::Split(squareDefinition);
+	string firstElement = squareElements.front();
 	int firstNumber = stoi(firstElement);
- 	auto squareType = static_cast<EPropertyType>(firstNumber);
+ 	auto squareType = static_cast<ESquareType>(firstNumber);
+	string squareName = "";
+	unique_ptr<CSquare> square;
 
-	switch (squareType) {
-		case EPropertyType::Property:
-			break;
-		case EPropertyType::Start:
-			break;
-		case EPropertyType::BusStation:
-			break;
-		case EPropertyType::Bonus:
-			break;
-		case EPropertyType::Penalty:
-			break;
-		case EPropertyType::Jail:
-			break;
-		case EPropertyType::GoToJail:
-			break;
-		case EPropertyType::FreeParking:
-			break;
-		default:
-			break;
+	if (squareType == ESquareType::Property)
+	{
+		int colourElement = stoi(squareElements.back());
+		CProperty::EColour colour = static_cast<CProperty::EColour>(colourElement);
+		squareElements.pop_back();
+
+		float rent = stof(squareElements.back());
+		squareElements.pop_back();
+
+		float cost = stof(squareElements.back());
+		squareElements.pop_back();
+
+		for( auto it = ++squareElements.begin(); it != squareElements.end(); ++it )
+		{
+			squareName += *it;
+			squareName += " ";
+		}
+
+		squareName.pop_back();
+		squareName = squareElements.back();
+		square = make_unique<CProperty>(squareName, cost, rent, colour);
+	}
+	else
+	{
+		squareDefinition.substr(firstElement.length() + 1);
+
+		switch (squareType) {
+			// case ESquareType::Start:
+			// 	break;
+			// case ESquareType::BusStation:
+			// 	break;
+			// case ESquareType::Bonus:
+			// 	break;
+			// case ESquareType::Penalty:
+			// 	break;
+			case ESquareType::Jail:
+				square = make_unique<CJailSquare>(squareName);
+				break;
+			case ESquareType::GoToJail:
+				square = make_unique<CGoToJailSquare>(squareName);
+				break;
+			case ESquareType::FreeParking:
+				square = make_unique<CFreeParkingSquare>(squareName);
+				break;
+			default:
+				square = make_unique<CSquare>(squareName);
+				break;
+		}
 	}
 
-	return CSquare("");
+	return move(square);
 }

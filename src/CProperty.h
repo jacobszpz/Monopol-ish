@@ -14,24 +14,27 @@ namespace mp
 	/**
 	 * @brief Type of CSquare that represents an ownable property.
 	 */
-	class CProperty : CSquare
+	class CProperty : public CSquare
 	{
 	public:
 		enum class EColour
 		{
-			Red,
-			Grey,
-			Brown,
-			Orange,
-			Yellow,
-			Green,
-			Blue,
-			Purple
+			Red = 0,
+			Grey = 1,
+			Brown = 2,
+			Orange = 3,
+			Yellow = 4,
+			Green = 5,
+			Blue = 6,
+			Purple = 7
 		};
-		CProperty();
+
+		CProperty(std::string name, float cost, float rent, EColour colourGroup);
+		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
 	protected:
 		float mCost;
 		float mRent;
+		EColour mColour;
 	};
 }
 

@@ -22,10 +22,9 @@ namespace mp
 	class CSquareFactory
 	{
 	public:
-		static CSquare ParseString(std::string squareDefinition);
+		static std::unique_ptr<CSquare> ParseString(std::string squareDefinition);
 		static std::vector<std::unique_ptr<CSquare>> ReadFromFile(std::string filename);
 	protected:
-		static constexpr int SQUARE_NAME_START = 2;
 	};
 }
 

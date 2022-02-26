@@ -8,20 +8,20 @@
 using namespace std;
 using namespace mp;
 
-TEST(EPiece_Test, OutputStreamPumpkin)
+TEST(EPieceTest, OutputStreamPumpkin)
 {
 	stringstream outputStream;
 	outputStream << EPiece::pumpkin;
 	string result = outputStream.str();
-	string expected = "pumpkin";
+	string expected = "Pumpkin";
 	ASSERT_EQ(result, expected);
 }
 
-TEST(EPiece_Test, OutputStreamHamster)
+TEST(EPieceTest, OutputStreamHamster)
 {
 	stringstream outputStream;
 	outputStream << EPiece::hamster;
 	string result = outputStream.str();
-	string expected = "hamster";
+	string expected = "Hamster";
 	ASSERT_EQ(result, expected);
 }

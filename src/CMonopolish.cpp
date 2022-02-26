@@ -23,7 +23,13 @@ CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 
 void CMonopolish::Play()
 {
-	mOutStream << "Welcome to Monopol-ish" << endl;
+	mOutStream << "Welcome to Monopol-ish" << endl << endl;
+
+	if (mPlayers.empty())
+	{
+		mOutStream << "Add some players before starting the game" << endl;
+		return;
+	}
 
 	// Play
 	for (unsigned int i = 1; i <= ROUNDS_NO; ++i)
@@ -32,7 +38,6 @@ void CMonopolish::Play()
 	}
 
 	mOutStream << "Game Over" << endl;
-
 	DisplayPlayerBalances();
 }
 
@@ -43,9 +48,9 @@ void CMonopolish::DisplayPlayerBalances()
 
 	for (const auto& player : mPlayers)
 	{
-		mOutStream << *player << " has £" << player->GetBalance() << endl;
-		float winnerBalance = mPlayers.at(winnerIndex)->GetBalance();
+		player->DisplayBalance(mOutStream);
 
+		float winnerBalance = mPlayers.at(winnerIndex)->GetBalance();
 		if (player->GetBalance() > winnerBalance)
 		{
 			winnerIndex = i;
@@ -54,7 +59,10 @@ void CMonopolish::DisplayPlayerBalances()
 		++i;
 	}
 
-	mOutStream << *(mPlayers.at(winnerIndex)) << " wins" << endl;
+	if (!mPlayers.empty())
+	{
+		mOutStream << *(mPlayers.at(winnerIndex)) << " wins" << endl;
+	}
 }
 
 void CMonopolish::Round(int roundNo)
@@ -63,12 +71,29 @@ void CMonopolish::Round(int roundNo)
 
 	for (const auto& player : mPlayers)
 	{
-		mOutStream << *player << " rolls " << 2 << endl;
-		mOutStream << *player << " lands on " << endl;
+		Turn(player);
 	}
+
+	mOutStream << endl;
 }
 
-void CMonopolish::AddPlayer(EPiece playingPiece)
+void CMonopolish::Turn(const unique_ptr<CPlayer>& player)
 {
-	mPlayers.push_back(make_unique<CPlayer>());
+	mOutStream << *player << " rolls " << 2 << endl;
+	mOutStream << *player << " lands on " << endl;
+
+	player->DisplayBalance(mOutStream);
+}
+
+bool CMonopolish::AddPlayer(EPiece playingPiece)
+{
+	bool pieceTaken{mPieces.count(playingPiece) == 1};
+
+	if (!pieceTaken)
+	{
+		mPieces.insert(playingPiece);
+		mPlayers.push_back(make_unique<CPlayer>(playingPiece));
+	}
+
+	return pieceTaken;
 }

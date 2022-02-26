@@ -8,7 +8,9 @@
 #define MP_SQUARE_H
 
 #include <string>
-#include "EPropertyType.h"
+#include <iostream>
+#include "CPlayer.h"
+#include "ESquareType.h"
 
 namespace mp
 {
@@ -19,9 +21,10 @@ namespace mp
 	{
 	public:
 		CSquare(std::string name);
+		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
 	protected:
 		std::string mName;
-		EPropertyType mType;
+		ESquareType mType;
 
 	};
 }

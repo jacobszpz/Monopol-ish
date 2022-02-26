@@ -18,12 +18,23 @@ namespace mp
 	class CPlayer
 	{
 	public:
+		/**
+		 * @brief Create a player with the specified playing piece.
+		 */
 		CPlayer(EPiece playingPiece);
+		/**
+		 * @brief Get the player's piece.
+		 */
 		EPiece GetPiece() const;
+		/**
+		 * @brief Get the player's balance as a float.
+		 */
 		float GetBalance() const;
+		void DisplayBalance(std::ostream& outputStream) const;
 	protected:
 		const EPiece mPiece;
 		std::string mName;
+		/// Player's position on the board
 		unsigned int mPosition = 0;
 		float mMoney = 1500;
 	};

@@ -19,6 +19,11 @@ float CPlayer::GetBalance() const
 	return mMoney;
 }
 
+void CPlayer::DisplayBalance(std::ostream& outputStream) const
+{
+	outputStream << GetPiece() << " has £" << GetBalance() << endl;
+}
+
 ostream& mp::operator << (ostream& outputStream, const CPlayer player)
 {
 		outputStream << player.GetPiece();

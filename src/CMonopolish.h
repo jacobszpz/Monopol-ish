@@ -7,6 +7,7 @@
 #ifndef MP_MONOPOLISH_H
 #define MP_MONOPOLISH_H
 
+#include <set>
 #include <vector>
 #include <memory>
 #include <iostream>
@@ -17,6 +18,7 @@
 namespace mp
 {
 	typedef std::vector<std::unique_ptr<CPlayer>> Players;
+	typedef std::set<EPiece> GamePieces;
 
 	/**
 	 * @brief Monopol-ish game manager.
@@ -31,22 +33,43 @@ namespace mp
 	class CMonopolish
 	{
 	public:
+		/**
+		 * @brief Create a Monopolish game that outputs to `std::cout`.
+		 */
 		CMonopolish();
+		/**
+		 * @brief Create a Monopolish game that outputs to a custom `std::ostream`.
+		 */
 		CMonopolish(std::ostream& outputStream);
-		void AddPlayer(EPiece playingPiece);
+		/**
+		 * @brief Add a player to the game.
+		 * @param playingPiece The player's piece of choice.
+		 * @returns True if piece has not been taken, otherwise false.
+		 */
+		bool AddPlayer(EPiece playingPiece);
+		/**
+		 * @brief Plays the game.
+		 */
 		void Play();
-		void Round(int roundNo);
-		void DisplayPlayerBalances();
-    //void Round();
 	protected:
+		void DisplayPlayerBalances();
+		/**
+		 * @brief Simulates a round of the game (a turn for every player).
+		 */
+		void Round(int roundNo);
+		void Turn(const std::unique_ptr<CPlayer>& player);
 		/// Number of rounds to play.
 	  const unsigned int ROUNDS_NO = 20;
+		/// Player bonus when passing through the GO square.
 		const float GO_BONUS{200};
+		/// Filename of board setup file.
 		const std::string BOARD_SETUP_FILENAME = "./src/monopolish.txt";
 
+		/// Holds the stream to output the game to.
 		std::ostream& mOutStream;
 		Players mPlayers;
 		BoardSquares mSquares;
+		GamePieces mPieces;
 
 	};
 }

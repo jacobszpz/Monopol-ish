@@ -11,7 +11,7 @@
 
 namespace mp
 {
-	enum class EPropertyType
+	enum class ESquareType
 	{
 		Property = 1,
 		Start = 2,

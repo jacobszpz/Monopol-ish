@@ -8,6 +8,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include "CTextFiles.h"
 
@@ -29,7 +30,7 @@ vector<string> CTextFiles::GetLinesFromFile(string filename, bool ignoreEmptyLin
 		{
 			bool isComment = false;
 
-			if (line.length() >= commentPrefix.length())
+			if (!commentPrefix.empty() && line.length() >= commentPrefix.length())
 			{
 				string prefix = line.substr(0, commentPrefix.length());
 				isComment = (prefix.compare(commentPrefix) == 0);
@@ -50,7 +51,7 @@ vector<string> CTextFiles::GetLinesFromFile(string filename, bool ignoreEmptyLin
 }
 
 // Split string into contiguous chunks
-vector<string> CTextFiles::Split(string line, char sep) {
+vector<string> CTextFiles::Split(string str, char sep) {
 	vector<string> pieces;
 	string buffer = "";
 	string suffix = " ";
@@ -60,9 +61,10 @@ vector<string> CTextFiles::Split(string line, char sep) {
 		suffix = sep;
 	}
 
-	line.append(suffix);
+	str = Strip(str);
+	str.append(suffix);
 
-	for (char c : line)
+	for (char c : str)
 	{
 		bool charIsSep = sep ? (sep == c) : isspace(c);
 
@@ -78,4 +80,15 @@ vector<string> CTextFiles::Split(string line, char sep) {
 	}
 
 	return pieces;
+}
+
+string CTextFiles::Strip(string str) {
+	str.erase(str.begin(), find_if(str.begin(), str.end(), [](unsigned char ch) {
+		return !isspace(ch);
+	}));
+
+	str.erase(find_if(str.rbegin(), str.rend(), [](unsigned char ch) {
+		return !isspace(ch);
+	}).base(), str.end());
+	return str;
 }
