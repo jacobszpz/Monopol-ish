@@ -11,7 +11,7 @@ using namespace std;
 using namespace mp;
 
 
-CSquare::CSquare(string propertyLine)
+CSquare::CSquare(string name)
 {
 
 }

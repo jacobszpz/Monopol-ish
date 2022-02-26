@@ -51,4 +51,5 @@ TEST(CTextFiles_SplitTest, HandleMonopolishLine)
 {
 	string testcase = "1 Corporation Street 300 45 6";
 	vector<string> expected{"1", "Corporation", "Street", "300", "45", "6" };
+	ASSERT_EQ(jsan::CTextFiles::Split(testcase), expected);
 }

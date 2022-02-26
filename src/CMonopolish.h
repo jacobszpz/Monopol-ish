@@ -9,11 +9,15 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 #include "CSquare.h"
 #include "CPlayer.h"
+#include "CSquareFactory.h"
 
 namespace mp
 {
+	typedef std::vector<std::unique_ptr<CPlayer>> Players;
+
 	/**
 	 * @brief Monopol-ish game manager.
 	 *
@@ -28,11 +32,22 @@ namespace mp
 	{
 	public:
 		CMonopolish();
-    void Round();
+		CMonopolish(std::ostream& outputStream);
+		void AddPlayer(EPiece playingPiece);
+		void Play();
+		void Round(int roundNo);
+		void DisplayPlayerBalances();
+    //void Round();
 	protected:
 		/// Number of rounds to play.
-	  const unsigned int mRounds = 20;
-    std::vector<std::unique_ptr<CPlayer>> mPlayers;
+	  const unsigned int ROUNDS_NO = 20;
+		const float GO_BONUS{200};
+		const std::string BOARD_SETUP_FILENAME = "./src/monopolish.txt";
+
+		std::ostream& mOutStream;
+		Players mPlayers;
+		BoardSquares mSquares;
+
 	};
 }
 

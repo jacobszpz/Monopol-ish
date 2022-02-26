@@ -44,6 +44,7 @@ CPPFLAGS = @CPPFLAGS@
 CPPFLAGS += -I $(code_dir)
 LDFLAGS = @LDFLAGS@
 CXXFLAGS = @CXXFLAGS@
+CXXFLAGS += -std=c++14
 
 # docs
 doxygen_dirs := html latex
@@ -66,7 +67,7 @@ exec_prefix = @exec_prefix@
 
 # target: all
 .PHONY: all
-all: clean docs $(binary_dir)/$(TARGET_EXEC)
+all: clean $(binary_dir)/$(TARGET_EXEC)
 
 
 # target: executable

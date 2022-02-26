@@ -8,6 +8,7 @@
 #define MP_PLAYER_H
 
 #include <string>
+#include "EPiece.h"
 
 namespace mp
 {
@@ -16,17 +17,18 @@ namespace mp
 	 */
 	class CPlayer
 	{
-		enum class EPiece
-		{
-			hamster,
-			pumpkin
-		};
+	public:
+		CPlayer(EPiece playingPiece);
+		EPiece GetPiece() const;
+		float GetBalance() const;
 	protected:
+		const EPiece mPiece;
 		std::string mName;
-		EPiece mPiece;
 		unsigned int mPosition = 0;
 		float mMoney = 1500;
 	};
+
+	std::ostream& operator << (std::ostream& outputStream, const CPlayer piece);
 }
 
 #endif

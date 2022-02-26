@@ -14,10 +14,10 @@ ostream& mp::operator << (ostream& outputStream, const EPiece piece)
 		switch(piece)
 		{
 				case EPiece::hamster:
-					outputStream << "hamster";
+					outputStream << "Hamster";
 					break;
 				case EPiece::pumpkin:
-					outputStream << "pumpkin";
+					outputStream << "Pumpkin";
 					break;
 				default:
 					outputStream.setstate(ios_base::failbit);
