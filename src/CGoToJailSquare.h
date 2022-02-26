@@ -7,6 +7,7 @@
 #ifndef MP_GO_JAIL_SQR_H
 #define MP_GO_JAIL_SQR_H
 
+#include <iostream>
 #include "CSquare.h"
 
 namespace mp
@@ -18,7 +19,9 @@ namespace mp
 	{
 	public:
 		CGoToJailSquare(std::string name);
+		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
 	protected:
+
 	};
 }
 

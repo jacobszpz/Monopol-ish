@@ -18,8 +18,8 @@ namespace mp
 	{
 	public:
 		CJailSquare(std::string name);
-	protected:
 		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
+	protected:
 	};
 }
 

@@ -18,6 +18,7 @@ namespace mp
 	{
 	public:
 		CFreeParkingSquare(std::string name);
+		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
 	protected:
 	};
 }
