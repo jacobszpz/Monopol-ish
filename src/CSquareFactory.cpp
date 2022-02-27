@@ -4,7 +4,7 @@
  * @author Jacob Sánchez Pérez <jsanchez-perez@uclan.ac.uk>
  */
 
- #include <iostream>
+#include <iostream>
  // uncomment to disable assert()
  // #define NDEBUG
 #include <cassert>

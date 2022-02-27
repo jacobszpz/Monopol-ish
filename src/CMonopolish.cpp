@@ -7,6 +7,7 @@
 #include <iostream>
 #include "CMonopolish.h"
 #include "CSquareFactory.h"
+#include "CRandom.h"
 
 using namespace std;
 using namespace mp;
@@ -18,7 +19,7 @@ CMonopolish::CMonopolish() : CMonopolish(cout)
 CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 {
 		// Setup
-		CSquareFactory::ReadFromFile(BOARD_SETUP_FILENAME);
+		mSquares = CSquareFactory::ReadFromFile(BOARD_SETUP_FILENAME);
 }
 
 void CMonopolish::Play()
@@ -79,7 +80,8 @@ void CMonopolish::Round(int roundNo)
 
 void CMonopolish::Turn(const unique_ptr<CPlayer>& player)
 {
-	mOutStream << *player << " rolls " << 2 << endl;
+	unsigned int diceRoll{unsigned(CRandom::Random())};
+	mOutStream << *player << " rolls " << diceRoll << endl;
 	mOutStream << *player << " lands on " << endl;
 
 	player->DisplayBalance(mOutStream);

@@ -8,7 +8,7 @@
 using namespace std;
 using namespace mp;
 
-TEST(CPlayer_OutOverloadTest, HandlePumpkin)
+TEST(CPlayer_OutOverloadTest, Pumpkin)
 {
 	string expected = "Pumpkin";
 	stringstream outputStream;
@@ -29,7 +29,7 @@ TEST(CPlayer_GetBalanceTest, InitialBalance)
 	ASSERT_EQ(result, expected);
 }
 
-TEST(CPlayer_GetPieceTest, HandlePumpkin)
+TEST(CPlayer_GetPieceTest, Pumpkin)
 {
 	EPiece expected = EPiece::pumpkin;
 	auto player = CPlayer(EPiece::pumpkin);

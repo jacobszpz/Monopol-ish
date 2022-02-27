@@ -60,8 +60,6 @@ namespace mp
 		void Turn(const std::unique_ptr<CPlayer>& player);
 		/// Number of rounds to play.
 	  const unsigned int ROUNDS_NO = 20;
-		/// Player bonus when passing through the GO square.
-		const float GO_BONUS{200};
 		/// Filename of board setup file.
 		const std::string BOARD_SETUP_FILENAME = "./src/monopolish.txt";
 

@@ -1,16 +1,17 @@
 #include <iostream>
 #include <ctime>
+#include "CRandom.h"
 using namespace std;
 
 // Returns a random number in the range 1 .. 6
 // Note that I am using casting to convert one data type to another
-int Random()
+int CRandom::Random()
 {
-	return static_cast<int>( static_cast<double> (rand()) / (RAND_MAX + 1) * 6.0f + 1 );
+	return static_cast<int>( static_cast<double> (rand()) / (RAND_MAX + 1u) * 6.0f + 1 );
 }
 
 
-int main_random()
+int CRandom::main_random()
 {
 	// A random number generator actually produces a pseudo-random sequence of numbers.
 	// This means that the random number generator will always produce the same sequence of numbers.
@@ -34,4 +35,6 @@ int main_random()
 		cout << Random() << endl;
 	}
 	system( "pause" );
+
+	return 0;
 }
