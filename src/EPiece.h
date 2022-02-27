@@ -14,7 +14,9 @@ namespace mp
 	enum class EPiece
 	{
 		hamster,
-		pumpkin
+		pumpkin,
+		dog,
+		jaguar
 	};
 
 	std::ostream& operator << (std::ostream& outputStream, const EPiece piece);

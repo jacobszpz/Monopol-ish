@@ -19,6 +19,12 @@ ostream& mp::operator << (ostream& outputStream, const EPiece piece)
 				case EPiece::pumpkin:
 					outputStream << "Pumpkin";
 					break;
+				case EPiece::dog:
+					outputStream << "Dog";
+					break;
+				case EPiece::jaguar:
+					outputStream << "Jaguar";
+					break;
 				default:
 					outputStream.setstate(ios_base::failbit);
 		}
