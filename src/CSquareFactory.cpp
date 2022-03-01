@@ -12,9 +12,9 @@
 #include "CProperty.h"
 #include "CGoSquare.h"
 #include "CStation.h"
-#include "CJailSquare.h"
-#include "CGoToJailSquare.h"
-#include "CFreeParkingSquare.h"
+#include "CJail.h"
+#include "CGoToJail.h"
+#include "CFreeParking.h"
 #include "CTextFiles.h"
 #include "ESquareType.h"
 
