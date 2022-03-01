@@ -32,7 +32,6 @@ namespace jsan
 		 * @brief Split a string
 		 */
 		static std::vector<std::string> Split(std::string str, char sep = '\0');
-
 		/**
 		 * @brief Strips whitespace from both ends of a string.
 		 * https://stackoverflow.com/a/217605/4517781

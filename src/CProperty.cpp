@@ -14,7 +14,6 @@ CProperty::CProperty(std::string name, float cost, float rent, EColour colourGro
 {
 }
 
-
 void CProperty::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
 {
 	if (mOwnedBy == EPiece::none)
@@ -22,17 +21,16 @@ void CProperty::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, os
 		if (player.GetBalance() > 0)
 		{
 			mOwnedBy = player.GetPiece();
-			bank.Deposit(player.Pay(mCost));
+			bank.Deposit(player.Pay(GetCost()));
 			player.Own(*this);
 
-			outputStream << player << " buys " << *this << " for " << mCost << endl;
-
+			outputStream << player << " buys " << *this << " for £" << GetCost() << endl;
 		}
 	}
 	else if (mOwnedBy != player.GetPiece() && !mMortaged)
 	{
-		players.at(mOwnedBy)->Receive(player.Pay(mRent));
-		outputStream << player << " pays " << mRent << endl;
+		players.at(mOwnedBy)->Receive(player.Pay(GetRent()));
+		DisplayRentMessage(outputStream, player);
 	}
 }
 
@@ -64,4 +62,9 @@ bool CProperty::IsMortgaged() const
 void CProperty::SetMortgaged(bool mortaged)
 {
 	mMortaged = mortaged;
+}
+
+void CProperty::DisplayRentMessage(std::ostream& outputStream, IPlayer& player) const
+{
+	outputStream << player << " pays £" << GetRent() << endl;
 }

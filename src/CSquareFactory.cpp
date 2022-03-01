@@ -56,14 +56,15 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 	else
 	{
 		squareName = squareDefinition.substr(firstElement.length() + 1);
+		squareName = CTextFiles::Strip(squareName);
 
 		switch (squareType) {
 			case ESquareType::Start:
 				square = make_unique<CGoSquare>(squareName);
 			 	break;
-			// case ESquareType::Station:
-			// 	square = make_unique<CStation>(squareName);
-			// 	break;
+			case ESquareType::Station:
+				square = make_unique<CStation>(squareName);
+				break;
 			// case ESquareType::Bonus:
 			// 	break;
 			// case ESquareType::Penalty:

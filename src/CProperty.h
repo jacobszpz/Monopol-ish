@@ -39,6 +39,7 @@ namespace mp
 		virtual EPiece GetOwner() const;
 		virtual bool IsMortgaged() const;
 		virtual void SetMortgaged(bool mortaged);
+		virtual void DisplayRentMessage(std::ostream& outputStream, IPlayer& player) const;
 	protected:
 		float mCost;
 		float mRent;
