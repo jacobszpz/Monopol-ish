@@ -5,7 +5,7 @@
  */
 
 #include <iostream>
-#include "CJailSquare.h"
+#include "CJail.h"
 
 using namespace std;
 using namespace mp;

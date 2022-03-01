@@ -5,7 +5,7 @@
  */
 
 #include <iostream>
-#include "CGoToJailSquare.h"
+#include "CGoToJail.h"
 
 using namespace std;
 using namespace mp;

@@ -5,7 +5,7 @@
  */
 
 #include <iostream>
-#include "CFreeParkingSquare.h"
+#include "CFreeParking.h"
 
 using namespace std;
 using namespace mp;
