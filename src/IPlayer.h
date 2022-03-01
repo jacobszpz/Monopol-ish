@@ -11,6 +11,8 @@
 #include <string>
 #include <memory>
 #include "EPiece.h"
+#include "CBank.h"
+#include "IOwnableSquare.h"
 #include "ESquareType.h"
 
 namespace mp
@@ -37,10 +39,22 @@ namespace mp
 		 * @brief Add some amount to the player's balance.
 		 */
 		virtual void Receive(float amount) = 0;
-		 /**
+		/**
  		 * @brief Substract some amount from the player's balance.
  		 */
 		virtual float Pay(float amount) = 0;
+		/**
+		 * @brief Register a property under the player's ownership.
+		 */
+		virtual void Own(IOwnableSquare& ownedSquare) = 0;
+		/**
+		 * @brief Check player's balance after their turn.
+		 */
+		virtual void BalanceCheck(std::ostream& outputStream, CBank bank) = 0;
+		/**
+		 * @brief Whether the player has become bankrupt.
+		 */
+		virtual bool IsBankrupt() = 0;
 		/**
 		 * @brief Get the player's position on the board.
 		 */
@@ -49,7 +63,13 @@ namespace mp
 		 * @brief Set the new position for the player.
 		 */
 		virtual void SetPosition(unsigned int position) = 0;
+		/**
+		 * @brief Set the new position to a special type of square.
+		 */
 		virtual void SetPosition(ESquareType square) = 0;
+		/**
+		 * @brief Print the player's balance through an std::ostream.
+		 */
 		virtual void DisplayBalance(std::ostream& outputStream) const = 0;
 		friend std::ostream& operator << (std::ostream& outputStream, const IPlayer& player);
 	};

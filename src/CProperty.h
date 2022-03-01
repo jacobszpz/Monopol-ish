@@ -15,7 +15,7 @@ namespace mp
 	/**
 	 * @brief Type of CSquare that represents an ownable property.
 	 */
-	class CProperty : public CSquare
+	class CProperty : public CSquare, public IOwnableSquare
 	{
 	public:
 		enum class EColour
@@ -32,11 +32,19 @@ namespace mp
 
 		CProperty(std::string name, float cost, float rent, EColour colourGroup);
 		virtual void PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
+
+		virtual std::string GetName() const;
+		virtual float GetCost() const;
+		virtual float GetRent() const;
+		virtual EPiece GetOwner() const;
+		virtual bool IsMortgaged() const;
+		virtual void SetMortgaged(bool mortaged);
 	protected:
 		float mCost;
 		float mRent;
 		EColour mColour;
 		EPiece mOwnedBy = EPiece::none;
+		bool mMortaged = false;
 	};
 }
 

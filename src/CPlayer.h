@@ -8,11 +8,13 @@
 #define MP_PLAYER_H
 
 #include <string>
+#include <set>
 #include "IPlayer.h"
 #include "EPiece.h"
 #include "CBank.h"
 #include "CBoard.h"
 #include "ESquareType.h"
+#include "COwnershipCard.h"
 
 namespace mp
 {
@@ -49,6 +51,18 @@ namespace mp
  		 */
 		virtual float Pay(float amount);
 		/**
+		 * @brief Register a property under the player's ownership.
+		 */
+		virtual void Own(IOwnableSquare& ownedSquare);
+		/**
+		 * @brief Check player's balance after their turn.
+		 */
+		virtual void BalanceCheck(std::ostream& outputStream, CBank bank);
+		/**
+		 * @brief Whether player has become bankrupt.
+		 */
+		virtual bool IsBankrupt();
+		/**
 		 * @brief Get the player's position on the board.
 		 */
 		virtual unsigned int GetPosition() const;
@@ -56,7 +70,13 @@ namespace mp
 		 * @brief Set the new position for the player.
 		 */
 		virtual void SetPosition(unsigned int position);
+		/**
+		 * @brief Set the new position to a special type of square.
+		 */
 		virtual void SetPosition(ESquareType square);
+		/**
+		 * @brief Print the player's balance through an `std::ostream`.
+		 */
 		void DisplayBalance(std::ostream& outputStream) const;
 	protected:
 		const EPiece mPiece;
@@ -64,6 +84,8 @@ namespace mp
 		unsigned int mPosition = 0;
 		float mMoney = 0;
 		CBoard& mBoard;
+		std::set<COwnershipCard> mProperties;
+		bool mBankrupt = false;
 	};
 
 	//std::ostream& operator << (std::ostream& outputStream, const CPlayer piece);

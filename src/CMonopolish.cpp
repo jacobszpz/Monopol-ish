@@ -77,7 +77,10 @@ void CMonopolish::Round(int roundNo)
 
 	for (const auto& player : mPlayers)
 	{
-		Turn(player.second);
+		if (!player.second->IsBankrupt())
+		{
+			Turn(player.second);
+		}
 	}
 
 	mOutStream << endl;
@@ -93,6 +96,7 @@ void CMonopolish::Turn(const unique_ptr<IPlayer>& player)
 	mOutStream << *player << " rolls " << diceRoll << endl;
 	mOutStream << *player << " lands on " << landingSquare << endl;
 	landingSquare.PlayerLands(*player, mPlayers, *mBank, mOutStream);
+	player->BalanceCheck(mOutStream, *mBank);
 	player->DisplayBalance(mOutStream);
 }
 
