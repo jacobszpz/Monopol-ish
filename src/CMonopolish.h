@@ -50,7 +50,7 @@ namespace mp
 		/**
 		 * @brief Plays the game.
 		 */
-		void Play();
+		int Play();
 	protected:
 		void DisplayPlayerBalances();
 		/**

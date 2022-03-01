@@ -24,14 +24,14 @@ CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 		mBank = make_unique<CBank>(BANK_INITIAL_RESERVES);
 }
 
-void CMonopolish::Play()
+int CMonopolish::Play()
 {
 	mOutStream << "Welcome to Monopol-ish" << endl << endl;
 
 	if (mPlayers.empty())
 	{
 		mOutStream << "Add some players before starting the game" << endl;
-		return;
+		return 1;
 	}
 
 	// Play
@@ -42,6 +42,8 @@ void CMonopolish::Play()
 
 	mOutStream << "Game Over" << endl;
 	DisplayPlayerBalances();
+
+	return 0;
 }
 
 void CMonopolish::DisplayPlayerBalances()
