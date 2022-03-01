@@ -8,6 +8,7 @@
 #define MP_PROPERTY_H
 
 #include "CSquare.h"
+#include "EPiece.h"
 
 namespace mp
 {
@@ -30,11 +31,12 @@ namespace mp
 		};
 
 		CProperty(std::string name, float cost, float rent, EColour colourGroup);
-		virtual void PlayerLands(IPlayer& player, std::ostream& outputStream);
+		virtual void PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
 	protected:
 		float mCost;
 		float mRent;
 		EColour mColour;
+		EPiece mOwnedBy = EPiece::none;
 	};
 }
 

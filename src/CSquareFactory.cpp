@@ -49,6 +49,8 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 			squareName += " ";
 		}
 
+		squareName.pop_back();
+
 		square = make_unique<CProperty>(squareName, cost, rent, colour);
 	}
 	else

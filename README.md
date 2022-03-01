@@ -27,7 +27,7 @@ chmod +x ./autogen.sh
 # Generate Makefile
 ./configure
 # Run tests
-make test
+make check
 # Create a binary in ./bin/
 make
 ```

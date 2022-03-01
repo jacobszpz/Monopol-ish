@@ -7,8 +7,11 @@
 #ifndef MP_SQUARE_H
 #define MP_SQUARE_H
 
+#include <map>
 #include <string>
+#include <memory>
 #include <iostream>
+#include "CBank.h"
 #include "IPlayer.h"
 #include "ESquareType.h"
 
@@ -21,7 +24,7 @@ namespace mp
 	{
 	public:
 		CSquare(std::string name, ESquareType type);
-		virtual void PlayerLands(IPlayer& player, std::ostream& outputStream);
+		virtual void PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
 		std::string GetName() const;
 		ESquareType GetType() const;
 	protected:

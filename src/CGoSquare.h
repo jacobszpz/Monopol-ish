@@ -19,7 +19,7 @@ namespace mp
 	{
 	public:
 		CGoSquare(std::string name);
-		virtual void PlayerLands(IPlayer& player, std::ostream& outputStream);
+		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
 	protected:
 		/// Player bonus when landing on this square.
 		const float GO_BONUS{200};

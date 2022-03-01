@@ -11,7 +11,7 @@
 using namespace std;
 using namespace mp;
 
-CPlayer::CPlayer(EPiece playingPiece, CBoard& board, CBank& bank) : mPiece(playingPiece), mBoard(board), mBank(bank)
+CPlayer::CPlayer(EPiece playingPiece, CBoard& board) : mPiece(playingPiece), mBoard(board)
 {
 }
 
@@ -30,16 +30,15 @@ void CPlayer::SetBalance(float newBalance)
 	mMoney = newBalance;
 }
 
-void CPlayer::PayMoney(float amount)
+float CPlayer::Pay(float amount)
 {
 	mMoney -= amount;
-	// TODO: Should this happen?
-	mBank.Deposit(amount);
+	return amount;
 }
 
-void CPlayer::ReceiveMoney(float amount)
+void CPlayer::Receive(float amount)
 {
-	mMoney += mBank.Withdraw(amount);
+	mMoney += amount;
 }
 
 unsigned int CPlayer::GetPosition() const

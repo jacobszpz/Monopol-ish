@@ -7,7 +7,7 @@
 #ifndef MP_MONOPOLISH_H
 #define MP_MONOPOLISH_H
 
-#include <set>
+#include <map>
 #include <vector>
 #include <memory>
 #include <iostream>
@@ -20,9 +20,6 @@
 
 namespace mp
 {
-	typedef std::vector<std::unique_ptr<CPlayer>> Players;
-	typedef std::set<EPiece> GamePieces;
-
 	/**
 	 * @brief Monopol-ish game manager.
 	 *
@@ -60,7 +57,7 @@ namespace mp
 		 * @brief Simulates a round of the game (a turn for every player).
 		 */
 		void Round(int roundNo);
-		void Turn(const std::unique_ptr<CPlayer>& player);
+		void Turn(const std::unique_ptr<IPlayer>& player);
 		/// Number of rounds to play.
 	  const unsigned int ROUNDS_NO = 20;
 		/// Bank reserve amount
@@ -90,9 +87,8 @@ namespace mp
 
 		/// Holds the stream to output the game to.
 		std::ostream& mOutStream;
-		Players mPlayers;
+		PlayerMap mPlayers;
 		std::unique_ptr<CBoard> mBoard;
-		GamePieces mPieces;
 		std::unique_ptr<CBank> mBank;
 	};
 }

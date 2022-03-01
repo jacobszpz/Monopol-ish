@@ -14,10 +14,9 @@ TEST(CPlayer_OutOverloadTest, Pumpkin)
 {
 	string expected = "Pumpkin";
 	stringstream outputStream;
-	CBank bank = CBank();
 	CBoard board = CBoard();
 
-	auto player = CPlayer(EPiece::pumpkin, board, bank);
+	auto player = CPlayer(EPiece::pumpkin, board);
 	outputStream << player;
 	string result = outputStream.str();
 
@@ -27,9 +26,8 @@ TEST(CPlayer_OutOverloadTest, Pumpkin)
 TEST(CPlayer_GetBalanceTest, InitialBalance)
 {
 	float expected = 0;
-	CBank bank = CBank();
 	CBoard board = CBoard();
-	auto player = CPlayer(EPiece::pumpkin, board, bank);
+	auto player = CPlayer(EPiece::pumpkin, board);
 	float result = player.GetBalance();
 
 	ASSERT_EQ(result, expected);
@@ -38,9 +36,8 @@ TEST(CPlayer_GetBalanceTest, InitialBalance)
 TEST(CPlayer_GetPieceTest, Pumpkin)
 {
 	EPiece expected = EPiece::pumpkin;
-	CBank bank = CBank();
 	CBoard board = CBoard();
-	auto player = CPlayer(EPiece::pumpkin, board, bank);
+	auto player = CPlayer(EPiece::pumpkin, board);
 	EPiece result = player.GetPiece();
 
 	ASSERT_EQ(result, expected);

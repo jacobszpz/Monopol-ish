@@ -15,7 +15,7 @@ CSquare::CSquare(string name, ESquareType type) : mName(name), mType(type)
 {
 }
 
-void CSquare::PlayerLands(IPlayer& player, ostream& outputStream)
+void CSquare::PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, ostream& outputStream)
 {
 }
 

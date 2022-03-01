@@ -27,7 +27,7 @@ namespace mp
 		 * @param playingPiece The player's token.
 		 * @param bank The game's bank.
 		 */
-		CPlayer(EPiece playingPiece, CBoard& board, CBank& bank);
+		CPlayer(EPiece playingPiece, CBoard& board);
 		/**
 		 * @brief Get the player's piece.
 		 */
@@ -43,11 +43,11 @@ namespace mp
 		/**
 		 * @brief Add some amount to the player's balance.
 		 */
-		virtual void ReceiveMoney(float amount);
-		 /**
+		virtual void Receive(float amount);
+		/**
  		 * @brief Substract some amount from the player's balance.
  		 */
- 		virtual void PayMoney(float amount);
+		virtual float Pay(float amount);
 		/**
 		 * @brief Get the player's position on the board.
 		 */
@@ -64,7 +64,6 @@ namespace mp
 		unsigned int mPosition = 0;
 		float mMoney = 0;
 		CBoard& mBoard;
-		CBank& mBank;
 	};
 
 	//std::ostream& operator << (std::ostream& outputStream, const CPlayer piece);

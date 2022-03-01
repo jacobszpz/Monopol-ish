@@ -47,16 +47,16 @@ void CMonopolish::Play()
 void CMonopolish::DisplayPlayerBalances()
 {
 	int i = 0;
-	int winnerIndex = 0;
+	EPiece winnerPiece = EPiece::none;
 
 	for (const auto& player : mPlayers)
 	{
-		player->DisplayBalance(mOutStream);
+		player.second->DisplayBalance(mOutStream);
 
-		float winnerBalance = mPlayers.at(winnerIndex)->GetBalance();
-		if (player->GetBalance() > winnerBalance)
+		float winnerBalance = mPlayers.at(winnerPiece)->GetBalance();
+		if (player.second->GetBalance() > winnerBalance)
 		{
-			winnerIndex = i;
+			winnerPiece = player.first;
 		}
 
 		++i;
@@ -64,7 +64,7 @@ void CMonopolish::DisplayPlayerBalances()
 
 	if (!mPlayers.empty())
 	{
-		mOutStream << *(mPlayers.at(winnerIndex)) << " wins" << endl;
+		mOutStream << *(mPlayers.at(winnerPiece)) << " wins" << endl;
 	}
 	mOutStream << mBank->GetBalance() << endl;
 }
@@ -75,13 +75,13 @@ void CMonopolish::Round(int roundNo)
 
 	for (const auto& player : mPlayers)
 	{
-		Turn(player);
+		Turn(player.second);
 	}
 
 	mOutStream << endl;
 }
 
-void CMonopolish::Turn(const unique_ptr<CPlayer>& player)
+void CMonopolish::Turn(const unique_ptr<IPlayer>& player)
 {
 	unsigned int diceRoll{unsigned(CRandom::Random())};
 	unsigned int newPosition = (player->GetPosition() + diceRoll) % mBoard->GetNumberOfSquares();
@@ -90,19 +90,19 @@ void CMonopolish::Turn(const unique_ptr<CPlayer>& player)
 
 	mOutStream << *player << " rolls " << diceRoll << endl;
 	mOutStream << *player << " lands on " << landingSquare << endl;
-	landingSquare.PlayerLands(*player, mOutStream);
+	landingSquare.PlayerLands(*player, mPlayers, *mBank, mOutStream);
 	player->DisplayBalance(mOutStream);
 }
 
 bool CMonopolish::AddPlayer(EPiece playingPiece)
 {
-	bool pieceTaken{mPieces.count(playingPiece) == 1};
+	bool pieceTaken{mPlayers.count(playingPiece) == 1};
 
 	if (!pieceTaken)
 	{
-		mPieces.insert(playingPiece);
-		mPlayers.push_back(make_unique<CPlayer>(playingPiece, *mBoard, *mBank));
-		mPlayers.back()->ReceiveMoney(PLAYER_INITIAL_BONUS);
+		mPlayers.insert(pair<EPiece,unique_ptr<IPlayer>>(playingPiece,
+			make_unique<CPlayer>(playingPiece, *mBoard)));
+		mPlayers.at(playingPiece)->Receive(mBank->Withdraw(PLAYER_INITIAL_BONUS));
 	}
 
 	return pieceTaken;

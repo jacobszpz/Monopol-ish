@@ -16,7 +16,8 @@ namespace mp
 		hamster,
 		pumpkin,
 		dog,
-		jaguar
+		jaguar,
+		none
 	};
 
 	std::ostream& operator << (std::ostream& outputStream, const EPiece piece);

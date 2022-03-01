@@ -15,8 +15,8 @@ CGoSquare::CGoSquare(string name): CSquare(name, ESquareType::Start)
 }
 
 
-void CGoSquare::PlayerLands(IPlayer& player, ostream& outputStream)
+void CGoSquare::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
 {
 	outputStream << player << " passes GO and collects £" << GO_BONUS << endl;
-	player.ReceiveMoney(GO_BONUS);
+	player.Receive(bank.Withdraw(GO_BONUS));
 }

@@ -7,7 +7,9 @@
 #ifndef MP_I_PLAYER_H
 #define MP_I_PLAYER_H
 
+#include <map>
 #include <string>
+#include <memory>
 #include "EPiece.h"
 #include "ESquareType.h"
 
@@ -34,11 +36,11 @@ namespace mp
 		/**
 		 * @brief Add some amount to the player's balance.
 		 */
-		virtual void ReceiveMoney(float amount) = 0;
+		virtual void Receive(float amount) = 0;
 		 /**
  		 * @brief Substract some amount from the player's balance.
  		 */
- 		virtual void PayMoney(float amount) = 0;
+		virtual float Pay(float amount) = 0;
 		/**
 		 * @brief Get the player's position on the board.
 		 */
@@ -48,8 +50,11 @@ namespace mp
 		 */
 		virtual void SetPosition(unsigned int position) = 0;
 		virtual void SetPosition(ESquareType square) = 0;
+		virtual void DisplayBalance(std::ostream& outputStream) const = 0;
 		friend std::ostream& operator << (std::ostream& outputStream, const IPlayer& player);
 	};
+
+	typedef std::map<EPiece, std::unique_ptr<IPlayer>> PlayerMap;
 }
 
 #endif
