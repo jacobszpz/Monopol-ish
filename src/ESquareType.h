@@ -15,7 +15,7 @@ namespace mp
 	{
 		Property = 1,
 		Start = 2,
-		BusStation = 3,
+		Station = 3,
 		Bonus = 4,
 		Penalty = 5,
 		Jail = 6,

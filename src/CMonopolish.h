@@ -14,6 +14,9 @@
 #include "CSquare.h"
 #include "CPlayer.h"
 #include "CSquareFactory.h"
+#include "CBank.h"
+#include "CChanceCard.h"
+#include "CBoard.h"
 
 namespace mp
 {
@@ -60,15 +63,37 @@ namespace mp
 		void Turn(const std::unique_ptr<CPlayer>& player);
 		/// Number of rounds to play.
 	  const unsigned int ROUNDS_NO = 20;
+		/// Bank reserve amount
+		const float BANK_INITIAL_RESERVES = 20000;
+		/// Initial player balance
+		const float PLAYER_INITIAL_BONUS = 1500;
 		/// Filename of board setup file.
 		const std::string BOARD_SETUP_FILENAME = "./src/monopolish.txt";
+
+		std::vector<CChanceCard> mBonuses {
+			{"Find some money.", 20},
+			{"Win a coding competition.", 50},
+			{"Receive a rent rebate.", 100},
+			{"Win the lottery.", 150},
+			{"Sell your iPad.", 200},
+			{"It’s your birthday.", 300}
+		};
+
+		std::vector<CChanceCard> mPenalties {
+			{"Buy a coffee in Starbucks.", 20},
+			{"Pay your broadband bill.", 50},
+			{"Visit the SU shop for food.", 100},
+			{"Buy an assignment solution.", 150},
+			{"Go for a romantic meal.", 200},
+			{"Pay some university fees.", 300}
+		};
 
 		/// Holds the stream to output the game to.
 		std::ostream& mOutStream;
 		Players mPlayers;
-		BoardSquares mSquares;
+		std::unique_ptr<CBoard> mBoard;
 		GamePieces mPieces;
-
+		std::unique_ptr<CBank> mBank;
 	};
 }
 

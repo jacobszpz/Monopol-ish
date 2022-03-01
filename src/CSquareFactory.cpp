@@ -10,6 +10,8 @@
 #include <cassert>
 #include "CSquareFactory.h"
 #include "CProperty.h"
+#include "CGoSquare.h"
+#include "CStation.h"
 #include "CJailSquare.h"
 #include "CGoToJailSquare.h"
 #include "CFreeParkingSquare.h"
@@ -19,19 +21,6 @@
 using namespace std;
 using namespace mp;
 using namespace jsan;
-
-BoardSquares CSquareFactory::ReadFromFile(std::string filename)
-{
-	BoardSquares squares;
-	auto fileLines = CTextFiles::GetLinesFromFile(filename);
-
-	for (auto line : fileLines)
-	{
-		squares.push_back(ParseString(line));
-	}
-
-	return squares;
-}
 
 unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 {
@@ -60,18 +49,18 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 			squareName += " ";
 		}
 
-		squareName.pop_back();
-		squareName = squareElements.back();
 		square = make_unique<CProperty>(squareName, cost, rent, colour);
 	}
 	else
 	{
-		squareDefinition.substr(firstElement.length() + 1);
+		squareName = squareDefinition.substr(firstElement.length() + 1);
 
 		switch (squareType) {
-			// case ESquareType::Start:
-			// 	break;
-			// case ESquareType::BusStation:
+			case ESquareType::Start:
+				square = make_unique<CGoSquare>(squareName);
+			 	break;
+			// case ESquareType::Station:
+			// 	square = make_unique<CStation>(squareName);
 			// 	break;
 			// case ESquareType::Bonus:
 			// 	break;
@@ -87,7 +76,7 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 				square = make_unique<CFreeParkingSquare>(squareName);
 				break;
 			default:
-				square = make_unique<CSquare>(squareName);
+				square = make_unique<CSquare>(squareName, ESquareType::Start);
 				break;
 		}
 	}

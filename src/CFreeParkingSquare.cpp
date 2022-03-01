@@ -10,11 +10,13 @@
 using namespace std;
 using namespace mp;
 
-CFreeParkingSquare::CFreeParkingSquare(string name): CSquare(name)
+CFreeParkingSquare::CFreeParkingSquare(string name): CSquare(name, ESquareType::FreeParking)
 {
 }
 
 
-void CFreeParkingSquare::PlayerLands(CPlayer& player, ostream& outputStream)
+void CFreeParkingSquare::PlayerLands(IPlayer& player, ostream& outputStream)
 {
+	//'<Player>lands on Free Parking'
+	outputStream << player << " is resting" << endl;
 }

@@ -18,10 +18,13 @@ namespace mp
 	class CBank
 	{
 	public:
-		static float Withdraw(float amount);
-		static void Deposit(float amount);
+		CBank();
+		CBank(float initialReserves);
+		float Withdraw(float amount);
+		void Deposit(float amount);
+		float GetBalance();
 	protected:
-		static float mReserves;
+		float mReserves = 0;
 	};
 }
 

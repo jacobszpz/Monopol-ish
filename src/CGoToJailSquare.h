@@ -19,9 +19,9 @@ namespace mp
 	{
 	public:
 		CGoToJailSquare(std::string name);
-		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
+		virtual void PlayerLands(IPlayer& player, std::ostream& outputStream);
 	protected:
-
+		const float JAIL_PENALTY = 50;
 	};
 }
 

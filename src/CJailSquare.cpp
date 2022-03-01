@@ -10,13 +10,12 @@
 using namespace std;
 using namespace mp;
 
-CJailSquare::CJailSquare(string name): CSquare(name)
+CJailSquare::CJailSquare(string name): CSquare(name, ESquareType::Jail)
 {
 }
 
 
-void CJailSquare::PlayerLands(CPlayer& player, ostream& outputStream)
+void CJailSquare::PlayerLands(IPlayer& player, ostream& outputStream)
 {
-	//'<Player> lands on Jail'
-	//‘<Player> is just visiting'
+	outputStream << player << " is just visiting" << endl;
 }

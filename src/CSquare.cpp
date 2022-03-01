@@ -11,11 +11,26 @@ using namespace std;
 using namespace mp;
 
 
-CSquare::CSquare(string name)
+CSquare::CSquare(string name, ESquareType type) : mName(name), mType(type)
 {
-
 }
 
-void CSquare::PlayerLands(CPlayer& player, ostream& outputStream)
+void CSquare::PlayerLands(IPlayer& player, ostream& outputStream)
 {
+}
+
+string CSquare::GetName() const
+{
+	return mName;
+}
+
+ESquareType CSquare::GetType() const
+{
+	return mType;
+}
+
+ostream& mp::operator << (ostream& outputStream, const CSquare square)
+{
+		outputStream << square.GetName();
+		return outputStream;
 }

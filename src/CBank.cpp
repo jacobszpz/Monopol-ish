@@ -10,6 +10,14 @@
 using namespace std;
 using namespace mp;
 
+CBank::CBank()
+{
+}
+
+CBank::CBank(float initialReserves) : mReserves(initialReserves)
+{
+}
+
 float CBank::Withdraw(float amount)
 {
 	float withdrawn = 0;
@@ -26,4 +34,9 @@ float CBank::Withdraw(float amount)
 void CBank::Deposit(float amount)
 {
 	mReserves += amount;
+}
+
+float CBank::GetBalance()
+{
+	return mReserves;
 }

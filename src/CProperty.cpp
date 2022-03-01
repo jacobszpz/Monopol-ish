@@ -10,11 +10,11 @@
 using namespace std;
 using namespace mp;
 
-CProperty::CProperty(std::string name, float cost, float rent, EColour colourGroup) : CSquare(name), mCost(cost), mRent(rent), mColour(colourGroup)
+CProperty::CProperty(std::string name, float cost, float rent, EColour colourGroup) : CSquare(name, ESquareType::Property), mCost(cost), mRent(rent), mColour(colourGroup)
 {
 }
 
 
-void CProperty::PlayerLands(CPlayer& player, ostream& outputStream)
+void CProperty::PlayerLands(IPlayer& player, ostream& outputStream)
 {
 }

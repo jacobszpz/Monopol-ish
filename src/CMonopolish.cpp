@@ -8,6 +8,7 @@
 #include "CMonopolish.h"
 #include "CSquareFactory.h"
 #include "CRandom.h"
+#include "CBank.h"
 
 using namespace std;
 using namespace mp;
@@ -19,7 +20,8 @@ CMonopolish::CMonopolish() : CMonopolish(cout)
 CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 {
 		// Setup
-		mSquares = CSquareFactory::ReadFromFile(BOARD_SETUP_FILENAME);
+		mBoard = make_unique<CBoard>(BOARD_SETUP_FILENAME);
+		mBank = make_unique<CBank>(BANK_INITIAL_RESERVES);
 }
 
 void CMonopolish::Play()
@@ -64,6 +66,7 @@ void CMonopolish::DisplayPlayerBalances()
 	{
 		mOutStream << *(mPlayers.at(winnerIndex)) << " wins" << endl;
 	}
+	mOutStream << mBank->GetBalance() << endl;
 }
 
 void CMonopolish::Round(int roundNo)
@@ -81,9 +84,13 @@ void CMonopolish::Round(int roundNo)
 void CMonopolish::Turn(const unique_ptr<CPlayer>& player)
 {
 	unsigned int diceRoll{unsigned(CRandom::Random())};
-	mOutStream << *player << " rolls " << diceRoll << endl;
-	mOutStream << *player << " lands on " << endl;
+	unsigned int newPosition = (player->GetPosition() + diceRoll) % mBoard->GetNumberOfSquares();
+	CSquare& landingSquare = mBoard->GetSquare(newPosition);
+	player->SetPosition(newPosition);
 
+	mOutStream << *player << " rolls " << diceRoll << endl;
+	mOutStream << *player << " lands on " << landingSquare << endl;
+	landingSquare.PlayerLands(*player, mOutStream);
 	player->DisplayBalance(mOutStream);
 }
 
@@ -94,7 +101,8 @@ bool CMonopolish::AddPlayer(EPiece playingPiece)
 	if (!pieceTaken)
 	{
 		mPieces.insert(playingPiece);
-		mPlayers.push_back(make_unique<CPlayer>(playingPiece));
+		mPlayers.push_back(make_unique<CPlayer>(playingPiece, *mBoard, *mBank));
+		mPlayers.back()->ReceiveMoney(PLAYER_INITIAL_BONUS);
 	}
 
 	return pieceTaken;

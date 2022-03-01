@@ -8,38 +8,66 @@
 #define MP_PLAYER_H
 
 #include <string>
+#include "IPlayer.h"
 #include "EPiece.h"
+#include "CBank.h"
+#include "CBoard.h"
+#include "ESquareType.h"
 
 namespace mp
 {
 	/**
 	 * @brief Represents a player of the game.
 	 */
-	class CPlayer
+	class CPlayer : public IPlayer
 	{
 	public:
 		/**
-		 * @brief Create a player with the specified playing piece.
+		 * @brief Create a player.
+		 * @param playingPiece The player's token.
+		 * @param bank The game's bank.
 		 */
-		CPlayer(EPiece playingPiece);
+		CPlayer(EPiece playingPiece, CBoard& board, CBank& bank);
 		/**
 		 * @brief Get the player's piece.
 		 */
-		EPiece GetPiece() const;
+		virtual EPiece GetPiece() const;
 		/**
 		 * @brief Get the player's balance as a float.
 		 */
-		float GetBalance() const;
+		virtual float GetBalance() const;
+		/**
+		 * @brief Set the player's balance.
+		 */
+		virtual void SetBalance(float newBalance);
+		/**
+		 * @brief Add some amount to the player's balance.
+		 */
+		virtual void ReceiveMoney(float amount);
+		 /**
+ 		 * @brief Substract some amount from the player's balance.
+ 		 */
+ 		virtual void PayMoney(float amount);
+		/**
+		 * @brief Get the player's position on the board.
+		 */
+		virtual unsigned int GetPosition() const;
+		/**
+		 * @brief Set the new position for the player.
+		 */
+		virtual void SetPosition(unsigned int position);
+		virtual void SetPosition(ESquareType square);
 		void DisplayBalance(std::ostream& outputStream) const;
 	protected:
 		const EPiece mPiece;
-		std::string mName;
 		/// Player's position on the board
 		unsigned int mPosition = 0;
-		float mMoney = 1500;
+		float mMoney = 0;
+		CBoard& mBoard;
+		CBank& mBank;
 	};
 
-	std::ostream& operator << (std::ostream& outputStream, const CPlayer piece);
+	//std::ostream& operator << (std::ostream& outputStream, const CPlayer piece);
 }
 
 #endif

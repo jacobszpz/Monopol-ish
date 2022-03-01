@@ -30,7 +30,7 @@ namespace mp
 		};
 
 		CProperty(std::string name, float cost, float rent, EColour colourGroup);
-		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
+		virtual void PlayerLands(IPlayer& player, std::ostream& outputStream);
 	protected:
 		float mCost;
 		float mRent;

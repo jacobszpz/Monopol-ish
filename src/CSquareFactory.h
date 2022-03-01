@@ -23,7 +23,6 @@ namespace mp
 	{
 	public:
 		static std::unique_ptr<CSquare> ParseString(std::string squareDefinition);
-		static std::vector<std::unique_ptr<CSquare>> ReadFromFile(std::string filename);
 	protected:
 	};
 }

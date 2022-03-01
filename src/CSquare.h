@@ -9,7 +9,7 @@
 
 #include <string>
 #include <iostream>
-#include "CPlayer.h"
+#include "IPlayer.h"
 #include "ESquareType.h"
 
 namespace mp
@@ -20,13 +20,16 @@ namespace mp
 	class CSquare
 	{
 	public:
-		CSquare(std::string name);
-		virtual void PlayerLands(CPlayer& player, std::ostream& outputStream);
+		CSquare(std::string name, ESquareType type);
+		virtual void PlayerLands(IPlayer& player, std::ostream& outputStream);
+		std::string GetName() const;
+		ESquareType GetType() const;
 	protected:
-		std::string mName;
+		const std::string mName;
 		ESquareType mType;
-
 	};
+
+	std::ostream& operator << (std::ostream& outputStream, const CSquare square);
 }
 
 #endif
