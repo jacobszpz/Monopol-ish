@@ -2,9 +2,10 @@
 #include <string>
 
 #include "gtest/gtest.h"
-#include "CRandom.h"
+#include "CDie.h"
 
 using namespace std;
+using namespace mp;
 
 TEST(CRandomTest, RandomBetween1And6)
 {
@@ -12,7 +13,7 @@ TEST(CRandomTest, RandomBetween1And6)
 	const int min = 1;
 	const int max = 6;
 
-	int result = CRandom::Random();
+	int result = CDie::Throw();
 
 	ASSERT_LE(result, max);
 	ASSERT_GE(result, min);
