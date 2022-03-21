@@ -13,6 +13,8 @@ namespace mp
 	public:
 		CChanceCard();
 		CChanceCard(std::string description, float amount);
+		float GetAmount();
+		std::string GetDescription();
 	protected:
 		std::string mDescription;
 		float mAmount;

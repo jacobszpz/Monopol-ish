@@ -67,24 +67,6 @@ namespace mp
 		/// Filename of board setup file.
 		const std::string BOARD_SETUP_FILENAME = "./src/monopolish.txt";
 
-		std::vector<CChanceCard> mBonuses {
-			{"Find some money.", 20},
-			{"Win a coding competition.", 50},
-			{"Receive a rent rebate.", 100},
-			{"Win the lottery.", 150},
-			{"Sell your iPad.", 200},
-			{"It’s your birthday.", 300}
-		};
-
-		std::vector<CChanceCard> mPenalties {
-			{"Buy a coffee in Starbucks.", 20},
-			{"Pay your broadband bill.", 50},
-			{"Visit the SU shop for food.", 100},
-			{"Buy an assignment solution.", 150},
-			{"Go for a romantic meal.", 200},
-			{"Pay some university fees.", 300}
-		};
-
 		/// Holds the stream to output the game to.
 		std::ostream& mOutStream;
 		PlayerMap mPlayers;

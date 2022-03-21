@@ -7,8 +7,8 @@
 #include <iostream>
 #include "CMonopolish.h"
 #include "CSquareFactory.h"
-#include "CRandom.h"
 #include "CBank.h"
+#include "CDie.h"
 
 using namespace std;
 using namespace mp;
@@ -22,6 +22,7 @@ CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 		// Setup
 		mBoard = make_unique<CBoard>(BOARD_SETUP_FILENAME);
 		mBank = make_unique<CBank>(BANK_INITIAL_RESERVES);
+		CDie::seed();
 }
 
 int CMonopolish::Play()
@@ -55,8 +56,16 @@ void CMonopolish::DisplayPlayerBalances()
 	{
 		player.second->DisplayBalance(mOutStream);
 
-		float winnerBalance = mPlayers.at(winnerPiece)->GetBalance();
-		if (player.second->GetBalance() > winnerBalance)
+		if (winnerPiece != EPiece::none)
+		{
+			float winnerBalance = mPlayers.at(winnerPiece)->GetBalance();
+
+			if (player.second->GetBalance() > winnerBalance)
+			{
+				winnerPiece = player.first;
+			}
+		}
+		else
 		{
 			winnerPiece = player.first;
 		}
@@ -66,7 +75,7 @@ void CMonopolish::DisplayPlayerBalances()
 
 	if (!mPlayers.empty())
 	{
-		mOutStream << *(mPlayers.at(winnerPiece)) << " wins" << endl;
+		mOutStream << *(mPlayers.at(winnerPiece)) << " wins!" << endl;
 	}
 	mOutStream << mBank->GetBalance() << endl;
 }
@@ -80,20 +89,18 @@ void CMonopolish::Round(int roundNo)
 		if (!player.second->IsBankrupt())
 		{
 			Turn(player.second);
+			mOutStream << endl;
 		}
 	}
-
-	mOutStream << endl;
 }
 
 void CMonopolish::Turn(const unique_ptr<IPlayer>& player)
 {
-	unsigned int diceRoll{unsigned(CRandom::Random())};
-	unsigned int newPosition = (player->GetPosition() + diceRoll) % mBoard->GetNumberOfSquares();
+	unsigned int dieRoll{player->ThrowDie(mOutStream)};
+	unsigned int newPosition = (player->GetPosition() + dieRoll) % mBoard->GetNumberOfSquares();
 	CSquare& landingSquare = mBoard->GetSquare(newPosition);
 	player->SetPosition(newPosition);
 
-	mOutStream << *player << " rolls " << diceRoll << endl;
 	mOutStream << *player << " lands on " << landingSquare << endl;
 	landingSquare.PlayerLands(*player, mPlayers, *mBank, mOutStream);
 	player->BalanceCheck(mOutStream, *mBank);

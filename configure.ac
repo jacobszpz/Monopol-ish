@@ -27,6 +27,12 @@ AC_SUBST(LIBGTEST)
 AC_CHECK_HEADERS([gtest/gtest.h],,
 	[AC_MSG_WARN([libgtest (Google C++ Unit Testing Framework) is not installed. Will not be able to run `make check`.])])
 
+AC_CHECK_HEADERS([gmock/gmock.h],
+	[AC_SUBST([LIBGMOCK], ["-lgmock"])],
+	[AC_MSG_WARN([libgmock-dev is not installed. Will not be able to run `make check`.])])
+
+AC_SUBST(LIBGMOCK)
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
 

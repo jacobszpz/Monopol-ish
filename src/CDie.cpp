@@ -1,17 +1,24 @@
 #include <iostream>
 #include <ctime>
-#include "CRandom.h"
+#include <string>
+#include "CDie.h"
+#include "CTextFiles.h"
+
 using namespace std;
+using namespace jsan;
+
+
+const string CDie::seedFile = "./src/seed.txt";
 
 // Returns a random number in the range 1 .. 6
 // Note that I am using casting to convert one data type to another
-int CRandom::Random()
+int CDie::Throw()
 {
 	return static_cast<int>( static_cast<double> (rand()) / (RAND_MAX + 1u) * 6.0f + 1 );
 }
 
 
-int CRandom::main_random()
+int CDie::main_random()
 {
 	// A random number generator actually produces a pseudo-random sequence of numbers.
 	// This means that the random number generator will always produce the same sequence of numbers.
@@ -22,7 +29,7 @@ int CRandom::main_random()
 	// static_cast<unsigned int> merely converts the output of time() into an unsigned integer.
 	for( int i = 0; i < 10; i++ )
 	{
-		cout << Random() << endl;
+		cout << Throw() << endl;
 	}
 	cout << endl;
 
@@ -32,9 +39,14 @@ int CRandom::main_random()
 	srand( 4 );
 	for( int i = 0; i < 10; i++ )
 	{
-		cout << Random() << endl;
+		cout << Throw() << endl;
 	}
 	system( "pause" );
 
 	return 0;
+}
+
+void CDie::seed() {
+	auto seedLines = CTextFiles::GetLinesFromFile(seedFile);
+	srand(stoi(seedLines.front()));
 }

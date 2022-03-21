@@ -16,3 +16,13 @@ CChanceCard::CChanceCard()
 CChanceCard::CChanceCard(string description, float amount) : mDescription(description), mAmount(amount)
 {
 }
+
+std::string CChanceCard::GetDescription()
+{
+	return mDescription;
+}
+
+float CChanceCard::GetAmount()
+{
+	return mAmount;
+}

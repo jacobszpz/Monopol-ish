@@ -15,6 +15,8 @@
 #include "CJail.h"
 #include "CGoToJail.h"
 #include "CFreeParking.h"
+#include "CBonus.h"
+#include "CPenalty.h"
 #include "CTextFiles.h"
 #include "ESquareType.h"
 
@@ -65,10 +67,12 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 			case ESquareType::Station:
 				square = make_unique<CStation>(squareName);
 				break;
-			// case ESquareType::Bonus:
-			// 	break;
-			// case ESquareType::Penalty:
-			// 	break;
+			case ESquareType::Bonus:
+				square = make_unique<CBonus>(squareName);
+				break;
+			case ESquareType::Penalty:
+				square = make_unique<CPenalty>(squareName);
+				break;
 			case ESquareType::Jail:
 				square = make_unique<CJailSquare>(squareName);
 				break;

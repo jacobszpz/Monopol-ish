@@ -78,6 +78,11 @@ namespace mp
 		 * @brief Print the player's balance through an `std::ostream`.
 		 */
 		void DisplayBalance(std::ostream& outputStream) const;
+		/**
+		 * @brief Throw die
+		 */
+		virtual unsigned int ThrowDie(std::ostream& outputStream) const;
+
 	protected:
 		const EPiece mPiece;
 		/// Player's position on the board

@@ -71,6 +71,11 @@ namespace mp
 		 * @brief Print the player's balance through an std::ostream.
 		 */
 		virtual void DisplayBalance(std::ostream& outputStream) const = 0;
+		/**
+		 * @brief Throws die
+		 */
+		virtual unsigned int ThrowDie(std::ostream& outputStream) const = 0;
+
 		friend std::ostream& operator << (std::ostream& outputStream, const IPlayer& player);
 	};
 

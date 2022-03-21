@@ -9,6 +9,7 @@
 #include "CBank.h"
 #include "CBoard.h"
 #include "COwnershipCard.h"
+#include "CDie.h"
 
 using namespace std;
 using namespace mp;
@@ -104,6 +105,13 @@ void CPlayer::SetPosition(ESquareType square)
 void CPlayer::DisplayBalance(std::ostream& outputStream) const
 {
 	outputStream << GetPiece() << " has £" << GetBalance() << endl;
+}
+
+unsigned int CPlayer::ThrowDie(std::ostream& outputStream) const
+{
+	unsigned int throwResult = unsigned(CDie::Throw());
+	outputStream << *this << " rolls " << throwResult << endl;
+	return throwResult;
 }
 //
 // ostream& mp::operator << (ostream& outputStream, const CPlayer player)
