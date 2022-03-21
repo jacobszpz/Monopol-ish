@@ -26,13 +26,18 @@ using namespace jsan;
 
 unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 {
+	// Split string into parts
 	auto squareElements = CTextFiles::Split(squareDefinition);
+	// Get square type
 	string firstElement = squareElements.front();
 	int firstNumber = stoi(firstElement);
  	auto squareType = static_cast<ESquareType>(firstNumber);
+
 	string squareName = "";
+	// Declare ptr
 	unique_ptr<CSquare> square;
 
+	// Do additional processing for a property square
 	if (squareType == ESquareType::Property)
 	{
 		int colourElement = stoi(squareElements.back());
@@ -57,6 +62,7 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 	}
 	else
 	{
+		// Create other types of square
 		squareName = squareDefinition.substr(firstElement.length() + 1);
 		squareName = CTextFiles::Strip(squareName);
 

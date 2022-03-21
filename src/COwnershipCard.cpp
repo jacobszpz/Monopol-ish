@@ -10,7 +10,7 @@
 using namespace std;
 using namespace mp;
 
-COwnershipCard::COwnershipCard(IOwnableSquare& property) : mProperty(property)
+COwnershipCard::COwnershipCard(IOwnableSquare& property, unsigned int insertionIndex) : mProperty(property), mInsertionIndex(insertionIndex)
 {
 }
 
@@ -44,11 +44,11 @@ namespace mp
 
 	bool operator < (const COwnershipCard& a, const COwnershipCard& b)
 	{
-			return a.GetCost() < b.GetCost();
+		return (a.GetCost() < b.GetCost()) || (a.GetCost() == b.GetCost() && a.mInsertionIndex < b.mInsertionIndex);
 	}
 
 	bool operator > (const COwnershipCard& a, const COwnershipCard& b)
 	{
-			return a.GetCost() > b.GetCost();
+			return (a.GetCost() > b.GetCost()) || (a.GetCost() == b.GetCost() && a.mInsertionIndex > b.mInsertionIndex);
 	}
 }

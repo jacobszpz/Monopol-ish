@@ -2,13 +2,9 @@
 #include <ctime>
 #include <string>
 #include "CDie.h"
-#include "CTextFiles.h"
 
 using namespace std;
-using namespace jsan;
-
-
-const string CDie::seedFile = "./src/seed.txt";
+using namespace mp;
 
 // Returns a random number in the range 1 .. 6
 // Note that I am using casting to convert one data type to another
@@ -46,7 +42,6 @@ int CDie::main_random()
 	return 0;
 }
 
-void CDie::seed() {
-	auto seedLines = CTextFiles::GetLinesFromFile(seedFile);
-	srand(stoi(seedLines.front()));
+void CDie::seed(unsigned seed) {
+	srand(seed);
 }

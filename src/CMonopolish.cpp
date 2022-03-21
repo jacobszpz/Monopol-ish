@@ -9,6 +9,7 @@
 #include "CSquareFactory.h"
 #include "CBank.h"
 #include "CDie.h"
+#include "CTextFiles.h"
 
 using namespace std;
 using namespace mp;
@@ -22,7 +23,9 @@ CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 		// Setup
 		mBoard = make_unique<CBoard>(BOARD_SETUP_FILENAME);
 		mBank = make_unique<CBank>(BANK_INITIAL_RESERVES);
-		CDie::seed();
+		// Seed from file
+		auto seedLines = jsan::CTextFiles::GetLinesFromFile(DIE_SEED_FILENAME);
+		CDie::seed(stoi(seedLines.front()));
 }
 
 int CMonopolish::Play()
@@ -73,10 +76,12 @@ void CMonopolish::DisplayPlayerBalances()
 		++i;
 	}
 
+	// Declare winner
 	if (!mPlayers.empty())
 	{
 		mOutStream << *(mPlayers.at(winnerPiece)) << " wins!" << endl;
 	}
+
 	mOutStream << mBank->GetBalance() << endl;
 }
 
@@ -96,8 +101,17 @@ void CMonopolish::Round(int roundNo)
 
 void CMonopolish::Turn(const unique_ptr<IPlayer>& player)
 {
-	unsigned int dieRoll{player->ThrowDie(mOutStream)};
-	unsigned int newPosition = (player->GetPosition() + dieRoll) % mBoard->GetNumberOfSquares();
+	auto dieRoll{player->ThrowDie(mOutStream)};
+	auto currentPosition = player->GetPosition();
+	auto newPosition = (currentPosition + dieRoll) % mBoard->GetNumberOfSquares();
+
+	if (newPosition < currentPosition)
+	{
+		// Player passed GO!
+		auto goSquareIndex = mBoard->GetGoSquareIndex();
+		mBoard->GetSquare(goSquareIndex).PlayerPasses(*player, mPlayers, *mBank, mOutStream);
+	}
+
 	CSquare& landingSquare = mBoard->GetSquare(newPosition);
 	player->SetPosition(newPosition);
 
@@ -113,8 +127,10 @@ bool CMonopolish::AddPlayer(EPiece playingPiece)
 
 	if (!pieceTaken)
 	{
-		mPlayers.insert(pair<EPiece,unique_ptr<IPlayer>>(playingPiece,
+		// Add player
+		mPlayers.insert(PlayerByPiece(playingPiece,
 			make_unique<CPlayer>(playingPiece, *mBoard)));
+		// Initial player bonus
 		mPlayers.at(playingPiece)->Receive(mBank->Withdraw(PLAYER_INITIAL_BONUS));
 	}
 

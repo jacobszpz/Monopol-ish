@@ -30,16 +30,28 @@ namespace mp
 			Purple = 7
 		};
 
+		/**
+		 * @brief Creates a property Square, with the specified parameters.
+		 */
 		CProperty(std::string name, float cost, float rent, EColour colourGroup);
+		/**
+		 * @brief Make user buy property if not already owned, otherwise pay rent over it.
+		 */
 		virtual void PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
-
+		/// Property name
 		virtual std::string GetName() const;
+		/// Property cost
 		virtual float GetCost() const;
+		/// Property rent
 		virtual float GetRent() const;
+		/// Get the piece which owns this property, or EPiece::none if nobody does
 		virtual EPiece GetOwner() const;
+		/// Whether property is currently mortgaged
 		virtual bool IsMortgaged() const;
+		/// Set property mortgage status
 		virtual void SetMortgaged(bool mortaged);
-		virtual void DisplayRentMessage(std::ostream& outputStream, IPlayer& player) const;
+		/// Display rent message
+		virtual void DisplayRentMessage(std::ostream& outputStream, IPlayer& player, IPlayer& owner) const;
 	protected:
 		float mCost;
 		float mRent;

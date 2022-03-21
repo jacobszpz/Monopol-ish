@@ -11,6 +11,9 @@
 
 namespace mp
 {
+	/**
+	 * @brief All the available playing pieces in the game.
+	 */
 	enum class EPiece
 	{
 		hamster,

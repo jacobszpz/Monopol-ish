@@ -12,6 +12,7 @@ using namespace mp;
 namespace mp {
 	ostream& operator << (ostream& outputStream, const IPlayer& player)
 	{
+		// Output piece name
 		outputStream << player.GetPiece();
 		return outputStream;
 	}

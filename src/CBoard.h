@@ -22,14 +22,31 @@ namespace mp
 	{
 	public:
 		CBoard();
+		/**
+		 * @brief Load a board from the specified setup file.
+		 */
 		CBoard(std::string setupFilename);
+		/**
+		 * @brief Get the index of the Jail Square.
+		 */
 		unsigned int GetJailSquareIndex() const;
+		/**
+		 * @brief Get the index of the Go Square.
+		 */
+		unsigned int GetGoSquareIndex() const;
+		/**
+		 * @brief Get the number of squares in the board.
+		 */
 		unsigned int GetNumberOfSquares() const;
+		/**
+		 * @brief Get a reference to a Square on the board.
+		 */
 		CSquare& GetSquare(unsigned int n);
 	protected:
 		unsigned int mJailSquareIndex;
 		int mGoToJailSquareIndex;
 		BoardSquares mSquares;
+		const unsigned int mGoSquareIndex = 0;
 	};
 }
 

@@ -16,5 +16,5 @@ CStation::CStation(string name): CProperty(name, STATION_COST, STATION_RENT, ECo
 
 void CStation::DisplayRentMessage(std::ostream& outputStream, IPlayer& player) const
 {
-	outputStream << player << " pays £" << GetRent() <<  " for ticket" << endl;
+	outputStream << player << " pays " << POUND << GetRent() <<  " for ticket" << endl;
 }

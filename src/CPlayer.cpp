@@ -35,13 +35,14 @@ void CPlayer::SetBalance(float newBalance)
 
 void CPlayer::BalanceCheck(ostream& outputStream, CBank bank)
 {
+	// Check if mortgaging or reedeming is possible
 	for (auto& ownedSquare : mProperties)
 	{
 		if (ownedSquare.IsMortgaged() && mMoney >= ownedSquare.GetCost())
 		{
 			// Redeem
 			outputStream << *this << " redeems " << ownedSquare.GetName();
-			outputStream << " and pays £" << ownedSquare.GetCost() << endl;
+			outputStream << " and pays " << POUND << ownedSquare.GetCost() << endl;
 			bank.Deposit(Pay(ownedSquare.GetCost()));
 			ownedSquare.SetMortgaged(false);
 		}
@@ -50,7 +51,7 @@ void CPlayer::BalanceCheck(ostream& outputStream, CBank bank)
 		{
 			// Mortgage
 			outputStream << *this << " mortgages " << ownedSquare.GetName();
-			outputStream << " for £" << ownedSquare.GetCost() << endl;
+			outputStream << " for " << POUND << ownedSquare.GetCost() << endl;
 			Receive(bank.Withdraw(ownedSquare.GetCost()));
 			ownedSquare.SetMortgaged(true);
 		}
@@ -76,7 +77,7 @@ void CPlayer::Receive(float amount)
 
 void CPlayer::Own(IOwnableSquare& ownedSquare)
 {
-	mProperties.insert(COwnershipCard(ownedSquare));
+	mProperties.insert(COwnershipCard(ownedSquare, mProperties.size()));
 }
 
 bool CPlayer::IsBankrupt()
@@ -104,7 +105,7 @@ void CPlayer::SetPosition(ESquareType square)
 
 void CPlayer::DisplayBalance(std::ostream& outputStream) const
 {
-	outputStream << GetPiece() << " has £" << GetBalance() << endl;
+	outputStream << GetPiece() << " has " << POUND << GetBalance() << endl;
 }
 
 unsigned int CPlayer::ThrowDie(std::ostream& outputStream) const

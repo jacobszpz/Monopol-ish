@@ -19,6 +19,10 @@ void CSquare::PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, os
 {
 }
 
+void CSquare::PlayerPasses(IPlayer& player, PlayerMap& playerMap, CBank& bank, ostream& outputStream)
+{
+}
+
 string CSquare::GetName() const
 {
 	return mName;

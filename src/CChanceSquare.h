@@ -19,12 +19,22 @@ namespace mp
 	class CChanceSquare : public CSquare
 	{
 	public:
+		/**
+		 * @brief Create a square that's either a Bonus or Penalty.
+		 */
 		CChanceSquare(std::string name, ESquareType type);
+		/**
+		 * @brief Roll the die and affect the player with a random chance card.
+		 */
 		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
+		/**
+		 * @brief Retrieve a chance card by index.
+		 */
 		virtual CChanceCard GetChanceCard(int index) = 0;
+		/**
+		 * @brief Affect the player's balance based on the chance card provided.
+		 */
 		virtual void AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, std::ostream& outputStream) = 0;
-	protected:
-		std::vector<CChanceCard> mChanceCards;
 	};
 }
 

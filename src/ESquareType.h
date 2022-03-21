@@ -11,6 +11,9 @@
 
 namespace mp
 {
+	/**
+	 * @brief All the possible Square types.
+	 */
 	enum class ESquareType
 	{
 		Property = 1,

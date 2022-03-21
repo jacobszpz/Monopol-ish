@@ -13,12 +13,14 @@
 namespace mp
 {
 	/**
-	 * @brief Type of CSquare that represents an ownable property.
+	 * @brief Type of CSquare that represents a Go To Jail square.
 	 */
 	class CGoToJailSquare : public CSquare
 	{
 	public:
+		/// Create a Square to send any player to Jail
 		CGoToJailSquare(std::string name);
+		/// Sends the player who lands to the Jail Square, and charges a fee.
 		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
 	protected:
 		const float JAIL_PENALTY = 50;

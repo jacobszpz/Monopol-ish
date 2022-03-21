@@ -16,6 +16,7 @@ CProperty::CProperty(std::string name, float cost, float rent, EColour colourGro
 
 void CProperty::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
 {
+	// Not owned
 	if (mOwnedBy == EPiece::none)
 	{
 		if (player.GetBalance() > 0)
@@ -24,13 +25,15 @@ void CProperty::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, os
 			bank.Deposit(player.Pay(GetCost()));
 			player.Own(*this);
 
-			outputStream << player << " buys " << *this << " for £" << GetCost() << endl;
+			outputStream << player << " buys " << *this << " for " << POUND << GetCost() << endl;
 		}
 	}
+	// Already owned
 	else if (mOwnedBy != player.GetPiece() && !mMortaged)
 	{
-		players.at(mOwnedBy)->Receive(player.Pay(GetRent()));
-		DisplayRentMessage(outputStream, player);
+		IPlayer& owner = *players.at(mOwnedBy);
+		owner.Receive(player.Pay(GetRent()));
+		DisplayRentMessage(outputStream, player, owner);
 	}
 }
 
@@ -64,7 +67,7 @@ void CProperty::SetMortgaged(bool mortaged)
 	mMortaged = mortaged;
 }
 
-void CProperty::DisplayRentMessage(std::ostream& outputStream, IPlayer& player) const
+void CProperty::DisplayRentMessage(std::ostream& outputStream, IPlayer& player, IPlayer& owner) const
 {
-	outputStream << player << " pays £" << GetRent() << endl;
+	outputStream << player << " pays " << POUND << GetRent() << " to " << owner << endl;
 }

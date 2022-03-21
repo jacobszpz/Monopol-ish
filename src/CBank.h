@@ -20,8 +20,17 @@ namespace mp
 	public:
 		CBank();
 		CBank(float initialReserves);
+		/**
+		 * @brief Withdraw an amount from the bank.
+		 */
 		float Withdraw(float amount);
+		/**
+		 * @brief Deposit an amount into the bank.
+		 */
 		void Deposit(float amount);
+		/**
+		 * @brief Get the bank's balance.
+		 */
 		float GetBalance();
 	protected:
 		float mReserves = 0;

@@ -22,6 +22,7 @@ float CBank::Withdraw(float amount)
 {
 	float withdrawn = 0;
 
+	// Only transact if reserves allow it
 	if (mReserves >= amount)
 	{
 		mReserves -= amount;

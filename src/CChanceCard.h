@@ -12,8 +12,18 @@ namespace mp
 	{
 	public:
 		CChanceCard();
+		/**
+		 * @brief Create a chance card, a card that holds a description and an amount.
+		 * This amount could either be added or substracted from the player's balance.
+		 */
 		CChanceCard(std::string description, float amount);
+		/**
+		 * @brief Get the amount of the card.
+		 */
 		float GetAmount();
+		/**
+		 * @brief Get the description of the card.
+		 */
 		std::string GetDescription();
 	protected:
 		std::string mDescription;

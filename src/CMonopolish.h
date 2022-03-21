@@ -18,6 +18,9 @@
 #include "CChanceCard.h"
 #include "CBoard.h"
 
+/**
+ * @brief Namespace for the Monopolish game.
+ */
 namespace mp
 {
 	/**
@@ -25,7 +28,7 @@ namespace mp
 	 *
 	 * > Manages a simplified version of the classic game Monopoly.
 	 * > This is not an interactive game you can play, but rather
-	 * > a simulation of two players taking turns over a set number
+	 * > a simulation of two/four players taking turns over a set number
 	 * > of rounds. Play is to be automated according to a sequence
 	 * > of pseudo-random numbers - there is no artificial
 	 * > intelligence, and no user input.
@@ -54,18 +57,23 @@ namespace mp
 	protected:
 		void DisplayPlayerBalances();
 		/**
-		 * @brief Simulates a round of the game (a turn for every player).
+		 * @brief Play a round of the game (a turn for every player).
 		 */
 		void Round(int roundNo);
+		/**
+		 * @brief Play the player's turn.
+		 */
 		void Turn(const std::unique_ptr<IPlayer>& player);
 		/// Number of rounds to play.
 	  const unsigned int ROUNDS_NO = 20;
-		/// Bank reserve amount
+		/// Bank reserve amount.
 		const float BANK_INITIAL_RESERVES = 20000;
-		/// Initial player balance
+		/// Initial player balance.
 		const float PLAYER_INITIAL_BONUS = 1500;
 		/// Filename of board setup file.
 		const std::string BOARD_SETUP_FILENAME = "./src/monopolish.txt";
+		/// Filename of seed file.
+		const std::string DIE_SEED_FILENAME = "./src/seed.txt";
 
 		/// Holds the stream to output the game to.
 		std::ostream& mOutStream;

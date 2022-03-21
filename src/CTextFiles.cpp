@@ -61,6 +61,7 @@ vector<string> CTextFiles::Split(string str, char sep) {
 		suffix = sep;
 	}
 
+	// First strip str
 	str = Strip(str);
 	str.append(suffix);
 
@@ -68,6 +69,7 @@ vector<string> CTextFiles::Split(string str, char sep) {
 	{
 		bool charIsSep = sep ? (sep == c) : isspace(c);
 
+		// Break buffer and reset it
 		if (charIsSep)
 		{
 			pieces.push_back(buffer);
@@ -75,6 +77,7 @@ vector<string> CTextFiles::Split(string str, char sep) {
 		}
 		else
 		{
+			// Append to buffer
 			buffer.append(1, c);
 		}
 	}
@@ -83,6 +86,8 @@ vector<string> CTextFiles::Split(string str, char sep) {
 }
 
 string CTextFiles::Strip(string str) {
+	// Strip whitespace from both ends
+
 	str.erase(str.begin(), find_if(str.begin(), str.end(), [](unsigned char ch) {
 		return !isspace(ch);
 	}));

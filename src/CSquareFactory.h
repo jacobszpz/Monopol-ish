@@ -22,6 +22,9 @@ namespace mp
 	class CSquareFactory
 	{
 	public:
+		/**
+		 * @brief Create a CSquare in the heap, from a string.
+		 */
 		static std::unique_ptr<CSquare> ParseString(std::string squareDefinition);
 	protected:
 	};

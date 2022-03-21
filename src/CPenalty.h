@@ -19,10 +19,20 @@ namespace mp
 	class CPenalty : public CChanceSquare
 	{
 	public:
+		/**
+		 * @brief Create a Penalty Square.
+		 */
 		CPenalty(std::string name);
+		/**
+		 * @brief Get a chance card at a certain index.
+		 */
 		virtual CChanceCard GetChanceCard(int index);
+		/**
+		 * @brief Takes the amount of the chance card from the player's balance.
+		 */
 		virtual void AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, std::ostream& outputStream);
 	protected:
+		/// Contain penalty chance cards
 		std::vector<CChanceCard> mPenalties {
 			{"Buy a coffee in Starbucks.", 20},
 			{"Pay your broadband bill.", 50},

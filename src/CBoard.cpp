@@ -47,6 +47,11 @@ unsigned int CBoard::GetJailSquareIndex() const
 	return mJailSquareIndex;
 }
 
+unsigned int CBoard::GetGoSquareIndex() const
+{
+	return mGoSquareIndex;
+}
+
 unsigned int CBoard::GetNumberOfSquares() const
 {
 	return mSquares.size();

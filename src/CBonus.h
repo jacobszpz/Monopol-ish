@@ -19,10 +19,20 @@ namespace mp
 	class CBonus : public CChanceSquare
 	{
 	public:
+		/**
+		 * @brief Create a bonus square.
+		 */
 		CBonus(std::string name);
+		/**
+		 * @brief Get a chance card by index.
+		 */
 		virtual CChanceCard GetChanceCard(int index);
+		/**
+		 * @brief Add the card's amount to the player's pocket.
+		 */
 		virtual void AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, std::ostream& outputStream);
 	protected:
+		/// Contains bonus cards.
 		std::vector<CChanceCard> mBonuses {
 			{"Find some money.", 20},
 			{"Win a coding competition.", 50},

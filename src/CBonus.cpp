@@ -22,5 +22,5 @@ CChanceCard CBonus::GetChanceCard(int index)
 void CBonus::AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, ostream& outputStream)
 {
 	player.Receive(bank.Withdraw(chanceCard.GetAmount()));
-	outputStream << chanceCard.GetDescription() << " Gain £" << chanceCard.GetAmount() << endl;
+	outputStream << chanceCard.GetDescription() << " Gain " << POUND << chanceCard.GetAmount() << endl;
 }

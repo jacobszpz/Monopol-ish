@@ -80,6 +80,7 @@ namespace mp
 	};
 
 	typedef std::map<EPiece, std::unique_ptr<IPlayer>> PlayerMap;
+	typedef std::pair<EPiece, std::unique_ptr<IPlayer>> PlayerByPiece;
 }
 
 #endif
