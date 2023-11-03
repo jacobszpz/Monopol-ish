@@ -15,11 +15,13 @@ CSquare::CSquare(string name, ESquareType type) : mName(name), mType(type)
 {
 }
 
-void CSquare::PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, ostream& outputStream)
+CSquare::~CSquare(){}
+
+void CSquare::PlayerLands(unique_ptr<IPlayer>& player, PlayerMap& playerMap, unique_ptr<CBank>& bank, ostream& outputStream)
 {
 }
 
-void CSquare::PlayerPasses(IPlayer& player, PlayerMap& playerMap, CBank& bank, ostream& outputStream)
+void CSquare::PlayerPasses(unique_ptr<IPlayer>& player, PlayerMap& playerMap, unique_ptr<CBank>& bank, ostream& outputStream)
 {
 }
 
@@ -31,6 +33,11 @@ string CSquare::GetName() const
 ESquareType CSquare::GetType() const
 {
 	return mType;
+}
+
+EColour CSquare::GetColour() const
+{
+	return EColour::None;
 }
 
 ostream& mp::operator << (ostream& outputStream, const CSquare square)

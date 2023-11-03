@@ -20,7 +20,7 @@ namespace mp
 		/// Create a Jail Square
 		CJailSquare(std::string name);
 		/// Has no effect on the player, only displays a message
-		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerLands(std::unique_ptr<IPlayer>& player, PlayerMap& players, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 	protected:
 	};
 }

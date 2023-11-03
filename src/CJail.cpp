@@ -15,7 +15,7 @@ CJailSquare::CJailSquare(string name): CSquare(name, ESquareType::Jail)
 }
 
 
-void CJailSquare::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
+void CJailSquare::PlayerLands(unique_ptr<IPlayer>& player, PlayerMap& players, unique_ptr<CBank>& bank, ostream& outputStream)
 {
-	outputStream << player << " is just visiting" << endl;
+	outputStream << player->GetPiece() << " is just visiting" << endl;
 }

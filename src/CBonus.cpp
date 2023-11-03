@@ -19,8 +19,8 @@ CChanceCard CBonus::GetChanceCard(int index)
 	return mBonuses.at(index);
 }
 
-void CBonus::AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, ostream& outputStream)
+void CBonus::AffectPlayer(unique_ptr<IPlayer>& player, unique_ptr<CBank>& bank, CChanceCard chanceCard, ostream& outputStream)
 {
-	player.Receive(bank.Withdraw(chanceCard.GetAmount()));
+	player->Receive(bank->Withdraw(chanceCard.GetAmount()));
 	outputStream << chanceCard.GetDescription() << " Gain " << POUND << chanceCard.GetAmount() << endl;
 }

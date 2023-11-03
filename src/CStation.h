@@ -25,7 +25,8 @@ namespace mp
 		/**
 		 * @brief Display the message shown when player lands on an owned Station.
 		 */
-		virtual void DisplayRentMessage(std::ostream& outputStream, IPlayer& player) const;
+		virtual void DisplayRentMessage(std::ostream& outputStream, std::unique_ptr<IPlayer>& player, std::unique_ptr<IPlayer>& owner, bool hasAllColour) const;
+		virtual bool CanBeMortgaged() const;
 	protected:
 		static constexpr float STATION_COST = 200;
 		static constexpr float STATION_RENT = 10;

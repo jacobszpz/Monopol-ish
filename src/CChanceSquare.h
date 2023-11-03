@@ -23,10 +23,11 @@ namespace mp
 		 * @brief Create a square that's either a Bonus or Penalty.
 		 */
 		CChanceSquare(std::string name, ESquareType type);
+		~CChanceSquare();
 		/**
 		 * @brief Roll the die and affect the player with a random chance card.
 		 */
-		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerLands(std::unique_ptr<IPlayer>& player, PlayerMap& players, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 		/**
 		 * @brief Retrieve a chance card by index.
 		 */
@@ -34,7 +35,7 @@ namespace mp
 		/**
 		 * @brief Affect the player's balance based on the chance card provided.
 		 */
-		virtual void AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, std::ostream& outputStream) = 0;
+		virtual void AffectPlayer(std::unique_ptr<IPlayer>& player, std::unique_ptr<CBank>& bank, CChanceCard chanceCard, std::ostream& outputStream) = 0;
 	};
 }
 

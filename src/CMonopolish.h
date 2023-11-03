@@ -59,11 +59,11 @@ namespace mp
 		/**
 		 * @brief Play a round of the game (a turn for every player).
 		 */
-		void Round(int roundNo);
+		bool Round(int roundNo);
 		/**
 		 * @brief Play the player's turn.
 		 */
-		void Turn(const std::unique_ptr<IPlayer>& player);
+		void Turn(std::unique_ptr<IPlayer>& player);
 		/// Number of rounds to play.
 	  const unsigned int ROUNDS_NO = 20;
 		/// Bank reserve amount.

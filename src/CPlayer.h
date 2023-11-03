@@ -29,7 +29,8 @@ namespace mp
 		 * @param playingPiece The player's token.
 		 * @param bank The game's bank.
 		 */
-		CPlayer(EPiece playingPiece, CBoard& board);
+		CPlayer(EPiece playingPiece, std::unique_ptr<CBoard>& board);
+		~CPlayer();
 		/**
 		 * @brief Get the player's piece.
 		 */
@@ -57,7 +58,7 @@ namespace mp
 		/**
 		 * @brief Check player's balance after their turn.
 		 */
-		virtual void BalanceCheck(std::ostream& outputStream, CBank bank);
+		virtual void BalanceCheck(std::ostream& outputStream, std::unique_ptr<CBank>& bank);
 		/**
 		 * @brief Whether player has become bankrupt.
 		 */
@@ -77,19 +78,24 @@ namespace mp
 		/**
 		 * @brief Print the player's balance through an `std::ostream`.
 		 */
-		void DisplayBalance(std::ostream& outputStream) const;
+		virtual void DisplayBalance(std::ostream& outputStream) const;
 		/**
 		 * @brief Throw die
 		 */
 		virtual unsigned int ThrowDie(std::ostream& outputStream) const;
+		/**
+		 * @brief Whether player owns all properties of this colour
+		 */
+		virtual bool HasAllOfColour(EColour squareColour);
 
 	protected:
 		const EPiece mPiece;
 		/// Player's position on the board
 		unsigned int mPosition = 0;
 		float mMoney = 0;
-		CBoard& mBoard;
-		std::set<COwnershipCard> mProperties;
+		std::unique_ptr<CBoard>& mBoard;
+		std::set<std::unique_ptr<COwnershipCard>> mProperties;
+		std::map<EColour, unsigned int> mPropertyColours;
 		bool mBankrupt = false;
 	};
 

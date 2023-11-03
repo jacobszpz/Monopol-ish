@@ -14,9 +14,11 @@
 using namespace std;
 using namespace mp;
 
-CPlayer::CPlayer(EPiece playingPiece, CBoard& board) : mPiece(playingPiece), mBoard(board)
+CPlayer::CPlayer(EPiece playingPiece, unique_ptr<CBoard>& board) : mPiece(playingPiece), mBoard(board)
 {
 }
+
+CPlayer::~CPlayer() {}
 
 EPiece CPlayer::GetPiece() const
 {
@@ -33,34 +35,37 @@ void CPlayer::SetBalance(float newBalance)
 	mMoney = newBalance;
 }
 
-void CPlayer::BalanceCheck(ostream& outputStream, CBank bank)
+void CPlayer::BalanceCheck(ostream& outputStream, unique_ptr<CBank>& bank)
 {
 	// Check if mortgaging or reedeming is possible
 	for (auto& ownedSquare : mProperties)
 	{
-		if (ownedSquare.IsMortgaged() && mMoney >= ownedSquare.GetCost())
+		if (ownedSquare->CanBeMortgaged())
 		{
-			// Redeem
-			outputStream << *this << " redeems " << ownedSquare.GetName();
-			outputStream << " and pays " << POUND << ownedSquare.GetCost() << endl;
-			bank.Deposit(Pay(ownedSquare.GetCost()));
-			ownedSquare.SetMortgaged(false);
-		}
+			if (ownedSquare->IsMortgaged() && mMoney >= ownedSquare->GetCost())
+			{
+				// Redeem
+				outputStream << GetPiece() << " redeems " << ownedSquare->GetName();
+				outputStream << " and pays " << POUND << ownedSquare->GetCost() << endl;
+				bank->Deposit(Pay(ownedSquare->GetCost()));
+				ownedSquare->SetMortgaged(false);
+			}
 
-		if (mMoney < 0 && !ownedSquare.IsMortgaged())
-		{
-			// Mortgage
-			outputStream << *this << " mortgages " << ownedSquare.GetName();
-			outputStream << " for " << POUND << ownedSquare.GetCost() << endl;
-			Receive(bank.Withdraw(ownedSquare.GetCost()));
-			ownedSquare.SetMortgaged(true);
+			if (mMoney < 0 && !ownedSquare->IsMortgaged())
+			{
+				// Mortgage
+				outputStream << GetPiece() << " mortgages " << ownedSquare->GetName();
+				outputStream << " for " << POUND << ownedSquare->GetCost() << endl;
+				Receive(bank->Withdraw(ownedSquare->GetCost()));
+				ownedSquare->SetMortgaged(true);
+			}
 		}
 	}
 
 	if (mMoney < 0)
 	{
 		mBankrupt = true;
-		outputStream << *this << " has become bankrupt." << endl;
+		outputStream << GetPiece() << " has become bankrupt." << endl;
 	}
 }
 
@@ -77,8 +82,27 @@ void CPlayer::Receive(float amount)
 
 void CPlayer::Own(IOwnableSquare& ownedSquare)
 {
-	mProperties.insert(COwnershipCard(ownedSquare, mProperties.size()));
+	mProperties.insert(make_unique<COwnershipCard>(ownedSquare, mProperties.size()));
+
+	EColour squareColour = ownedSquare.GetColour();
+
+	// Save count of number of properties with a certain color
+	if (mPropertyColours.count(squareColour) == 0)
+	{
+		mPropertyColours[squareColour] = 0;
+	}
+
+	mPropertyColours.at(squareColour) += 1;
+
+
 }
+
+bool CPlayer::HasAllOfColour(EColour squareColour) {
+	// Player owns all squares of this colour?
+	auto totalCount = mBoard->GetCountByColour(squareColour);
+	return mPropertyColours.at(squareColour) == totalCount;
+}
+
 
 bool CPlayer::IsBankrupt()
 {
@@ -99,7 +123,7 @@ void CPlayer::SetPosition(ESquareType square)
 {
 	if (square == ESquareType::Jail)
 	{
-		mPosition = mBoard.GetJailSquareIndex();
+		mPosition = mBoard->GetJailSquareIndex();
 	}
 }
 
@@ -111,7 +135,7 @@ void CPlayer::DisplayBalance(std::ostream& outputStream) const
 unsigned int CPlayer::ThrowDie(std::ostream& outputStream) const
 {
 	unsigned int throwResult = unsigned(CDie::Throw());
-	outputStream << *this << " rolls " << throwResult << endl;
+	outputStream << GetPiece() << " rolls " << throwResult << endl;
 	return throwResult;
 }
 //

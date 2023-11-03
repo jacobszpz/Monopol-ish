@@ -42,6 +42,6 @@ int CDie::main_random()
 	return 0;
 }
 
-void CDie::seed(unsigned seed) {
+void CDie::Seed(unsigned seed) {
 	srand(seed);
 }

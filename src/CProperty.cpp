@@ -14,26 +14,37 @@ CProperty::CProperty(std::string name, float cost, float rent, EColour colourGro
 {
 }
 
-void CProperty::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
+CProperty::~CProperty() {}
+
+void CProperty::PlayerLands(unique_ptr<IPlayer>& player, PlayerMap& players, unique_ptr<CBank>& bank, ostream& outputStream)
 {
 	// Not owned
 	if (mOwnedBy == EPiece::none)
 	{
-		if (player.GetBalance() > 0)
+		if (player->GetBalance() > 0)
 		{
-			mOwnedBy = player.GetPiece();
-			bank.Deposit(player.Pay(GetCost()));
-			player.Own(*this);
+			mOwnedBy = player->GetPiece();
+			bank->Deposit(player->Pay(GetCost()));
+			player->Own(*this);
 
-			outputStream << player << " buys " << *this << " for " << POUND << GetCost() << endl;
+			outputStream << player->GetPiece() << " buys " << this->GetName() << " for " << POUND << GetCost() << endl;
 		}
 	}
 	// Already owned
-	else if (mOwnedBy != player.GetPiece() && !mMortaged)
+	else if (mOwnedBy != player->GetPiece() && !mMortaged)
 	{
-		IPlayer& owner = *players.at(mOwnedBy);
-		owner.Receive(player.Pay(GetRent()));
-		DisplayRentMessage(outputStream, player, owner);
+		auto rent = GetRent();
+		unique_ptr<IPlayer>& owner = players.at(mOwnedBy);
+		bool hasAllColour = owner->HasAllOfColour(GetColour());
+
+		// Check if owner has all of this colour
+		if (hasAllColour)
+		{
+			rent *= mColourRentMultiplier;
+		}
+
+		owner->Receive(player->Pay(rent));
+		DisplayRentMessage(outputStream, player, owner, hasAllColour);
 	}
 }
 
@@ -52,6 +63,11 @@ float CProperty::GetRent() const
 	return mRent;
 }
 
+EColour CProperty::GetColour() const
+{
+	return mColour;
+}
+
 EPiece CProperty::GetOwner() const
 {
 	return mOwnedBy;
@@ -67,7 +83,17 @@ void CProperty::SetMortgaged(bool mortaged)
 	mMortaged = mortaged;
 }
 
-void CProperty::DisplayRentMessage(std::ostream& outputStream, IPlayer& player, IPlayer& owner) const
+bool CProperty::CanBeMortgaged() const
 {
-	outputStream << player << " pays " << POUND << GetRent() << " to " << owner << endl;
+	return true;
+}
+
+void CProperty::DisplayRentMessage(std::ostream& outputStream, unique_ptr<IPlayer>& player, unique_ptr<IPlayer>& owner, bool hasAllColour) const
+{
+	auto rent = GetRent();
+	if (hasAllColour)
+	{
+		rent *= mColourRentMultiplier;
+	}
+	outputStream << player->GetPiece() << " pays " << POUND << rent << " to " << owner->GetPiece() << endl;
 }

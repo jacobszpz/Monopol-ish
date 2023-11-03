@@ -15,10 +15,10 @@ CGoToJailSquare::CGoToJailSquare(string name): CSquare(name, ESquareType::GoToJa
 }
 
 
-void CGoToJailSquare::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
+void CGoToJailSquare::PlayerLands(unique_ptr<IPlayer>& player, PlayerMap& players, unique_ptr<CBank>& bank, ostream& outputStream)
 {
-	outputStream << player << " goes to Jail" << endl;
-	outputStream << player << " pays " << POUND << JAIL_PENALTY << endl;
-	bank.Deposit(player.Pay(JAIL_PENALTY));
-	player.SetPosition(ESquareType::Jail);
+	outputStream << player->GetPiece() << " goes to Jail" << endl;
+	outputStream << player->GetPiece() << " pays " << POUND << JAIL_PENALTY << endl;
+	bank->Deposit(player->Pay(JAIL_PENALTY));
+	player->SetPosition(ESquareType::Jail);
 }

@@ -15,8 +15,8 @@ CFreeParkingSquare::CFreeParkingSquare(string name): CSquare(name, ESquareType::
 }
 
 
-void CFreeParkingSquare::PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, ostream& outputStream)
+void CFreeParkingSquare::PlayerLands(unique_ptr<IPlayer>& player, PlayerMap& players, unique_ptr<CBank>& bank, ostream& outputStream)
 {
 	//'<Player>lands on Free Parking'
-	outputStream << player << " is resting" << endl;
+	outputStream << player->GetPiece() << " is resting" << endl;
 }

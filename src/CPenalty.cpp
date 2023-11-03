@@ -19,8 +19,8 @@ CChanceCard CPenalty::GetChanceCard(int index)
 	return mPenalties.at(index);
 }
 
-void CPenalty::AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, ostream& outputStream)
+void CPenalty::AffectPlayer(unique_ptr<IPlayer>& player, unique_ptr<CBank>& bank, CChanceCard chanceCard, ostream& outputStream)
 {
-	bank.Deposit(player.Pay(chanceCard.GetAmount()));
+	bank->Deposit(player->Pay(chanceCard.GetAmount()));
 	outputStream << chanceCard.GetDescription() << " Lose " << POUND << chanceCard.GetAmount() << endl;
 }

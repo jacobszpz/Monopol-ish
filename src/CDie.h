@@ -30,7 +30,7 @@
 		 * @brief Seed the die with an integer
 		 * Actually calls srand.
 		 */
-		static void seed(unsigned seed);
+		static void Seed(unsigned seed);
 	};
 }
 

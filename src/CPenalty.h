@@ -30,7 +30,7 @@ namespace mp
 		/**
 		 * @brief Takes the amount of the chance card from the player's balance.
 		 */
-		virtual void AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, std::ostream& outputStream);
+		virtual void AffectPlayer(std::unique_ptr<IPlayer>& player, std::unique_ptr<CBank>& bank, CChanceCard chanceCard, std::ostream& outputStream);
 	protected:
 		/// Contain penalty chance cards
 		std::vector<CChanceCard> mPenalties {

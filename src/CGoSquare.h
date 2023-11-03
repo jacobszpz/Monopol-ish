@@ -22,11 +22,11 @@ namespace mp
 		/**
 		 * @brief Nothing actually happens.
 		 */
-		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerLands(std::unique_ptr<IPlayer>& player, PlayerMap& players, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 		/**
 		 * @brief Player collects a bonus (GO_BONUS).
 		 */
-		virtual void PlayerPasses(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerPasses(std::unique_ptr<IPlayer>& player, PlayerMap& playerMap, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 	protected:
 		/// Player bonus when landing on this square.
 		const float GO_BONUS{200};

@@ -25,7 +25,7 @@ CMonopolish::CMonopolish(ostream& outputStream) : mOutStream(outputStream)
 		mBank = make_unique<CBank>(BANK_INITIAL_RESERVES);
 		// Seed from file
 		auto seedLines = jsan::CTextFiles::GetLinesFromFile(DIE_SEED_FILENAME);
-		CDie::seed(stoi(seedLines.front()));
+		CDie::Seed(stoi(seedLines.front()));
 }
 
 int CMonopolish::Play()
@@ -38,13 +38,15 @@ int CMonopolish::Play()
 		return 1;
 	}
 
+	bool playersLeft = true;
 	// Play
-	for (unsigned int i = 1; i <= ROUNDS_NO; ++i)
+	for (unsigned int i = 1; i <= ROUNDS_NO && playersLeft; ++i)
 	{
-		Round(i);
+		playersLeft = Round(i);
 	}
 
 	mOutStream << "Game Over" << endl;
+	mOutStream << "=========" << endl;
 	DisplayPlayerBalances();
 
 	return 0;
@@ -79,27 +81,35 @@ void CMonopolish::DisplayPlayerBalances()
 	// Declare winner
 	if (!mPlayers.empty())
 	{
-		mOutStream << *(mPlayers.at(winnerPiece)) << " wins!" << endl;
+		mOutStream << mPlayers.at(winnerPiece)->GetPiece() << " wins!" << endl;
 	}
-
-	mOutStream << mBank->GetBalance() << endl;
 }
 
-void CMonopolish::Round(int roundNo)
+bool CMonopolish::Round(int roundNo)
 {
 	mOutStream << "round " << roundNo << endl;
-
-	for (const auto& player : mPlayers)
+	mOutStream << "========" << endl;
+	unsigned int nBankrupt = 0;
+	for (auto& player : mPlayers)
 	{
 		if (!player.second->IsBankrupt())
 		{
 			Turn(player.second);
 			mOutStream << endl;
+		} else {
+			++nBankrupt;
+		}
+
+		if (nBankrupt == mPlayers.size() - 1)
+		{
+			return false;
 		}
 	}
+
+	return true;
 }
 
-void CMonopolish::Turn(const unique_ptr<IPlayer>& player)
+void CMonopolish::Turn(unique_ptr<IPlayer>& player)
 {
 	auto dieRoll{player->ThrowDie(mOutStream)};
 	auto currentPosition = player->GetPosition();
@@ -109,15 +119,15 @@ void CMonopolish::Turn(const unique_ptr<IPlayer>& player)
 	{
 		// Player passed GO!
 		auto goSquareIndex = mBoard->GetGoSquareIndex();
-		mBoard->GetSquare(goSquareIndex).PlayerPasses(*player, mPlayers, *mBank, mOutStream);
+		mBoard->GetSquare(goSquareIndex)->PlayerPasses(player, mPlayers, mBank, mOutStream);
 	}
 
-	CSquare& landingSquare = mBoard->GetSquare(newPosition);
+	unique_ptr<CSquare>& landingSquare = mBoard->GetSquare(newPosition);
 	player->SetPosition(newPosition);
 
-	mOutStream << *player << " lands on " << landingSquare << endl;
-	landingSquare.PlayerLands(*player, mPlayers, *mBank, mOutStream);
-	player->BalanceCheck(mOutStream, *mBank);
+	mOutStream << player->GetPiece() << " lands on " << landingSquare->GetName() << endl;
+	landingSquare->PlayerLands(player, mPlayers, mBank, mOutStream);
+	player->BalanceCheck(mOutStream, mBank);
 	player->DisplayBalance(mOutStream);
 }
 
@@ -128,8 +138,8 @@ bool CMonopolish::AddPlayer(EPiece playingPiece)
 	if (!pieceTaken)
 	{
 		// Add player
-		mPlayers.insert(PlayerByPiece(playingPiece,
-			make_unique<CPlayer>(playingPiece, *mBoard)));
+		mPlayers.insert({playingPiece,
+			make_unique<CPlayer>(playingPiece, mBoard)});
 		// Initial player bonus
 		mPlayers.at(playingPiece)->Receive(mBank->Withdraw(PLAYER_INITIAL_BONUS));
 	}

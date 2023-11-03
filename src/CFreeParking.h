@@ -20,7 +20,7 @@ namespace mp
 		/// Create a Free Parking Square
 		CFreeParkingSquare(std::string name);
 		/// Only display a message, no other effects
-		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerLands(std::unique_ptr<IPlayer>& player, PlayerMap& players, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 	protected:
 	};
 }

@@ -30,7 +30,7 @@ namespace mp
 		/**
 		 * @brief Add the card's amount to the player's pocket.
 		 */
-		virtual void AffectPlayer(IPlayer& player, CBank& bank, CChanceCard chanceCard, std::ostream& outputStream);
+		virtual void AffectPlayer(std::unique_ptr<IPlayer>& player, std::unique_ptr<CBank>& bank, CChanceCard chanceCard, std::ostream& outputStream);
 	protected:
 		/// Contains bonus cards.
 		std::vector<CChanceCard> mBonuses {

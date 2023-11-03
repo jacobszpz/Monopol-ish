@@ -21,7 +21,7 @@ namespace mp
 		/// Create a Square to send any player to Jail
 		CGoToJailSquare(std::string name);
 		/// Sends the player who lands to the Jail Square, and charges a fee.
-		virtual void PlayerLands(IPlayer& player, PlayerMap& players, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerLands(std::unique_ptr<IPlayer>& player, PlayerMap& players, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 	protected:
 		const float JAIL_PENALTY = 50;
 	};

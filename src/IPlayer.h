@@ -23,6 +23,7 @@ namespace mp
 	class IPlayer
 	{
 	public:
+		virtual ~IPlayer() = 0;
 		/**
 		 * @brief Get the player's piece.
 		 */
@@ -50,7 +51,7 @@ namespace mp
 		/**
 		 * @brief Check player's balance after their turn.
 		 */
-		virtual void BalanceCheck(std::ostream& outputStream, CBank bank) = 0;
+		virtual void BalanceCheck(std::ostream& outputStream, std::unique_ptr<CBank>& bank) = 0;
 		/**
 		 * @brief Whether the player has become bankrupt.
 		 */
@@ -76,11 +77,16 @@ namespace mp
 		 */
 		virtual unsigned int ThrowDie(std::ostream& outputStream) const = 0;
 
+		/// Whether player owns all of this colour.
+		virtual bool HasAllOfColour(EColour squareColour) = 0;
+
 		friend std::ostream& operator << (std::ostream& outputStream, const IPlayer& player);
 	};
 
 	typedef std::map<EPiece, std::unique_ptr<IPlayer>> PlayerMap;
 	typedef std::pair<EPiece, std::unique_ptr<IPlayer>> PlayerByPiece;
+	typedef std::unique_ptr<IPlayer> PlayerPtr;
+	inline IPlayer::~IPlayer() { }
 }
 
 #endif

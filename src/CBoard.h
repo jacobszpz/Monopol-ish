@@ -12,6 +12,7 @@
 #include <memory>
 #include "CSquare.h"
 #include "CSquareFactory.h"
+#include "EColour.h"
 
 namespace mp
 {
@@ -41,12 +42,16 @@ namespace mp
 		/**
 		 * @brief Get a reference to a Square on the board.
 		 */
-		CSquare& GetSquare(unsigned int n);
+		std::unique_ptr<CSquare>& GetSquare(unsigned int index);
+		/**
+		 * @brief Get property count for a certain colour
+		 */
+		 unsigned int GetCountByColour(EColour colour);
 	protected:
 		unsigned int mJailSquareIndex;
-		int mGoToJailSquareIndex;
 		BoardSquares mSquares;
 		const unsigned int mGoSquareIndex = 0;
+		std::map<EColour, unsigned int> mPropertyColours;
 	};
 }
 

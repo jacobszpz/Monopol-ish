@@ -15,6 +15,7 @@
 #include "IPlayer.h"
 #include "ESquareType.h"
 #include "Constants.h"
+#include "EColour.h"
 
 namespace mp
 {
@@ -28,20 +29,23 @@ namespace mp
 		 * @brief Create a CSquare, with the chosen name, and type.
 		 */
 		CSquare(std::string name, ESquareType type);
+		virtual ~CSquare();
 		/**
 		 * @brief Virtual method called when player lands on the Square.
 		 * Effects will depend on the type of Square.
 		 */
-		virtual void PlayerLands(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerLands(std::unique_ptr<IPlayer>& player, PlayerMap& playerMap, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 		/**
 		 * @brief Virtual method called when player passes over the Square.
 		 * Only called when user passes over CGoSquare, but still polymorphic.
 		 */
-		virtual void PlayerPasses(IPlayer& player, PlayerMap& playerMap, CBank& bank, std::ostream& outputStream);
+		virtual void PlayerPasses(std::unique_ptr<IPlayer>& player, PlayerMap& playerMap, std::unique_ptr<CBank>& bank, std::ostream& outputStream);
 		// Returns the name of the Square.
 		std::string GetName() const;
 		// Returns the type of the Square.
 		ESquareType GetType() const;
+
+		virtual EColour GetColour() const;
 	protected:
 		/// Square name.
 		const std::string mName;

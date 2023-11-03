@@ -8,6 +8,7 @@
 #define MP_OWNERSHIP_CARD_H
 
 #include <string>
+#include <memory>
 #include "IOwnableSquare.h"
 #include "EPiece.h"
 
@@ -47,11 +48,13 @@ namespace mp
 		 * @brief Set the property morgaging status.
 		 */
 		void SetMortgaged(bool mortgaged) const;
+
+		bool CanBeMortgaged() const;
 		/**
 		 * @brief Compares the cost and insertion order of properties.
 		 */
-		friend bool operator < (const COwnershipCard& a, const COwnershipCard& b);
-		friend bool operator > (const COwnershipCard& a, const COwnershipCard& b);
+		friend bool operator < (const std::unique_ptr<COwnershipCard>& a, const std::unique_ptr<COwnershipCard>& b);
+		friend bool operator > (const std::unique_ptr<COwnershipCard>& a, const std::unique_ptr<COwnershipCard>& b);
 	protected:
 		IOwnableSquare& mProperty;
 		unsigned int mInsertionIndex;

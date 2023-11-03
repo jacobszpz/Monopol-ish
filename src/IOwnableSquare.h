@@ -9,6 +9,7 @@
 
 #include <string>
 #include "EPiece.h"
+#include "EColour.h"
 
 namespace mp
 {
@@ -20,10 +21,12 @@ namespace mp
 	public:
 		virtual std::string GetName() const = 0;
 		virtual float GetCost() const = 0;
+		virtual EColour GetColour() const = 0;
 		virtual float GetRent() const = 0;
 		virtual EPiece GetOwner() const = 0;
 		virtual bool IsMortgaged() const = 0;
 		virtual void SetMortgaged(bool mortaged) = 0;
+		virtual bool CanBeMortgaged() const = 0;
 	};
 }
 

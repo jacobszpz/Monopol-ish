@@ -12,6 +12,7 @@ namespace mp
 	{
 	public:
 		CChanceCard();
+
 		/**
 		 * @brief Create a chance card, a card that holds a description and an amount.
 		 * This amount could either be added or substracted from the player's balance.

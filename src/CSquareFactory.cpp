@@ -41,7 +41,7 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 	if (squareType == ESquareType::Property)
 	{
 		int colourElement = stoi(squareElements.back());
-		CProperty::EColour colour = static_cast<CProperty::EColour>(colourElement);
+		EColour colour = static_cast<EColour>(colourElement);
 		squareElements.pop_back();
 
 		float rent = stof(squareElements.back());
@@ -88,8 +88,7 @@ unique_ptr<CSquare> CSquareFactory::ParseString(string squareDefinition)
 			case ESquareType::FreeParking:
 				square = make_unique<CFreeParkingSquare>(squareName);
 				break;
-			default:
-				square = make_unique<CSquare>(squareName, ESquareType::Start);
+			case ESquareType::Property:
 				break;
 		}
 	}

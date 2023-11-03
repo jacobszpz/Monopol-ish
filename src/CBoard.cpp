@@ -33,13 +33,23 @@ CBoard::CBoard(string setupFilename)
 			mJailSquareIndex = i;
 		}
 
+		EColour squareColour = mSquares.back()->GetColour();
+
+		// Save count of number of properties with a certain color
+		if (mPropertyColours.count(squareColour) == 0)
+		{
+			mPropertyColours[squareColour] = 0;
+		}
+
+		mPropertyColours.at(squareColour) += 1;
+
 		++i;
 	}
 }
 
-CSquare& CBoard::GetSquare(unsigned int n)
+unique_ptr<CSquare>& CBoard::GetSquare(unsigned int index)
 {
-	return *(mSquares.at(n));
+	return mSquares.at(index);
 }
 
 unsigned int CBoard::GetJailSquareIndex() const
@@ -55,4 +65,15 @@ unsigned int CBoard::GetGoSquareIndex() const
 unsigned int CBoard::GetNumberOfSquares() const
 {
 	return mSquares.size();
+}
+
+unsigned int CBoard::GetCountByColour(EColour colour)
+{
+	unsigned int count = 0;
+	if (mPropertyColours.count(colour) == 1)
+	{
+		count = mPropertyColours.at(colour);
+	}
+
+	return count;
 }

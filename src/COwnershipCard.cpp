@@ -39,16 +39,21 @@ void COwnershipCard::SetMortgaged(bool mortgaged) const
 	mProperty.SetMortgaged(mortgaged);
 }
 
+bool COwnershipCard::CanBeMortgaged() const
+{
+	return mProperty.CanBeMortgaged();
+}
+
 namespace mp
 {
 
-	bool operator < (const COwnershipCard& a, const COwnershipCard& b)
+	bool operator < (const unique_ptr<COwnershipCard>& a, const unique_ptr<COwnershipCard>& b)
 	{
-		return (a.GetCost() < b.GetCost()) || (a.GetCost() == b.GetCost() && a.mInsertionIndex < b.mInsertionIndex);
+		return (a->GetCost() < b->GetCost()) || (a->GetCost() == b->GetCost() && a->mInsertionIndex < b->mInsertionIndex);
 	}
 
-	bool operator > (const COwnershipCard& a, const COwnershipCard& b)
+	bool operator > (const unique_ptr<COwnershipCard>& a, const unique_ptr<COwnershipCard>& b)
 	{
-			return (a.GetCost() > b.GetCost()) || (a.GetCost() == b.GetCost() && a.mInsertionIndex > b.mInsertionIndex);
+			return (a->GetCost() > b->GetCost()) || (a->GetCost() == b->GetCost() && a->mInsertionIndex > b->mInsertionIndex);
 	}
 }
